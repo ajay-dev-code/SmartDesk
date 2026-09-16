@@ -9,7 +9,8 @@ from app.schemas.ticket import (
     TicketResponse,
     TicketListResponse,
     TicketDetailResponse,
-    StatusUpdateRequest
+    StatusUpdateRequest,
+    ClassificationUpdateRequest
 )
 from app.auth.dependencies import get_current_admin
 from app.services.ai_service import classify_ticket
@@ -213,18 +214,17 @@ def get_ticket_detail(
         "status_history": history
     }
 
-
 # --------------------------------------------------
-# UPDATE TICKET STATUS
+# UPDATE TICKET CATEGORY & PRIORITY
 # --------------------------------------------------
 
 @router.patch(
-    "/{ticket_id}/status",
+    "/{ticket_id}/classification",
     response_model=TicketDetailResponse
 )
-def update_ticket_status(
+def update_ticket_classification(
     ticket_id: int,
-    status_data: StatusUpdateRequest,
+    classification_data: ClassificationUpdateRequest,
     db: Session = Depends(get_db),
     current_admin=Depends(get_current_admin)
 ):
@@ -241,45 +241,48 @@ def update_ticket_status(
             detail="Ticket not found"
         )
 
-    # Allowed statuses
-    allowed_statuses = [
-        "Open",
-        "In Progress",
-        "Resolved",
-        "Closed"
-    ]
+    # Allowed categories
+    allowed_categories = {
+        "Technical",
+        "Billing",
+        "Account",
+        "General"
+    }
 
-    new_status = status_data.status.strip()
+    # Allowed priorities
+    allowed_priorities = {
+        "Low",
+        "Medium",
+        "High"
+    }
 
-    if new_status not in allowed_statuses:
+    new_category = classification_data.category.strip()
+    new_priority = classification_data.priority.strip()
+
+    # Validate category
+    if new_category not in allowed_categories:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid status. Allowed values: Open, In Progress, Resolved, Closed"
+            detail="Invalid category. Allowed values: Technical, Billing, Account, General"
         )
 
-    # Store previous status
-    previous_status = ticket.status
+    # Validate priority
+    if new_priority not in allowed_priorities:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid priority. Allowed values: Low, Medium, High"
+        )
 
-    # Update ticket status
-    ticket.status = new_status
-
-    # Create status history
-    history = StatusHistory(
-        ticket_id=ticket.id,
-        previous_status=previous_status,
-        new_status=new_status,
-        remark=status_data.remark,
-        admin_user_id=current_admin.id
-    )
-
-    db.add(history)
+    # Update classification
+    ticket.category = new_category
+    ticket.priority = new_priority
 
     # Save changes
     db.commit()
     db.refresh(ticket)
 
-    # Get updated history
-    updated_history = (
+    # Get status history
+    history = (
         db.query(StatusHistory)
         .filter(
             StatusHistory.ticket_id == ticket.id
@@ -303,5 +306,5 @@ def update_ticket_status(
         "ai_summary": ticket.ai_summary,
         "created_at": ticket.created_at,
         "updated_at": ticket.updated_at,
-        "status_history": updated_history
+        "status_history": history
     }
