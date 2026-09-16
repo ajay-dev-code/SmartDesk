@@ -1,21 +1,23 @@
-from fastapi import APIRouter, Depends, status, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
 from app.database.database import get_db
 from app.models.ticket import Ticket
+from app.models.status_history import StatusHistory
 from app.schemas.ticket import (
     TicketCreate,
     TicketResponse,
-    TicketListResponse
+    TicketListResponse,
+    TicketDetailResponse
 )
-from app.services.ai_service import classify_ticket
 from app.auth.dependencies import get_current_admin
+from app.services.ai_service import classify_ticket
+
 
 router = APIRouter(
     prefix="/api/tickets",
     tags=["Tickets"]
 )
-
 
 
 @router.post(
@@ -38,11 +40,8 @@ def create_ticket(
     )
 
     db.add(ticket)
-
-    # Get the auto-generated ticket ID
     db.flush()
 
-    # Generate reference number
     ticket.reference_number = f"TKT-{ticket.id:05d}"
 
     # AI classification
@@ -60,24 +59,46 @@ def create_ticket(
 
     return ticket
 
-
 @router.get(
     "",
     response_model=TicketListResponse
 )
 def get_all_tickets(
     search: str | None = Query(default=None),
-    status_filter: str | None = Query(default=None, alias="status"),
-    category_filter: str | None = Query(default=None, alias="category"),
-    priority_filter: str | None = Query(default=None, alias="priority"),
-    page: int = Query(default=1, ge=1),
-    page_size: int = Query(default=10, ge=1, le=100),
+
+    status_filter: str | None = Query(
+        default=None,
+        alias="status"
+    ),
+
+    category_filter: str | None = Query(
+        default=None,
+        alias="category"
+    ),
+
+    priority_filter: str | None = Query(
+        default=None,
+        alias="priority"
+    ),
+
+    page: int = Query(
+        default=1,
+        ge=1
+    ),
+
+    page_size: int = Query(
+        default=10,
+        ge=1,
+        le=100
+    ),
+
     db: Session = Depends(get_db),
+
     current_admin=Depends(get_current_admin)
 ):
     query = db.query(Ticket)
 
-    # Search by reference, subject, or email
+    # Search
     if search:
         search_value = f"%{search}%"
 
@@ -87,33 +108,34 @@ def get_all_tickets(
             (Ticket.customer_email.like(search_value))
         )
 
-    # Filter by status
+    # Status filter
     if status_filter:
         query = query.filter(
             Ticket.status == status_filter
         )
 
-    # Filter by category
+    # Category filter
     if category_filter:
         query = query.filter(
             Ticket.category == category_filter
         )
 
-    # Filter by priority
+    # Priority filter
     if priority_filter:
         query = query.filter(
             Ticket.priority == priority_filter
         )
 
-    # Total matching tickets
+    # Total records
     total = query.count()
 
-    # Calculate pagination
+    # Pagination
     offset = (page - 1) * page_size
 
-    total_pages = (total + page_size - 1) // page_size
+    total_pages = (
+        total + page_size - 1
+    ) // page_size
 
-    # Get current page tickets
     tickets = (
         query
         .order_by(Ticket.created_at.desc())
@@ -122,11 +144,64 @@ def get_all_tickets(
         .all()
     )
 
-    # Return pagination response
     return {
         "items": tickets,
         "page": page,
         "page_size": page_size,
         "total": total,
         "total_pages": total_pages
+    }
+
+
+@router.get(
+    "/{ticket_id}",
+    response_model=TicketDetailResponse
+)
+def get_ticket_detail(
+    ticket_id: int,
+
+    db: Session = Depends(get_db),
+
+    current_admin=Depends(get_current_admin)
+):
+    # Find ticket
+    ticket = (
+        db.query(Ticket)
+        .filter(Ticket.id == ticket_id)
+        .first()
+    )
+
+    # Ticket not found
+    if ticket is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Ticket not found"
+        )
+
+    # Get ticket status history
+    history = (
+        db.query(StatusHistory)
+        .filter(
+            StatusHistory.ticket_id == ticket_id
+        )
+        .order_by(
+            StatusHistory.created_at.asc()
+        )
+        .all()
+    )
+
+    return {
+        "id": ticket.id,
+        "reference_number": ticket.reference_number,
+        "customer_name": ticket.customer_name,
+        "customer_email": ticket.customer_email,
+        "subject": ticket.subject,
+        "description": ticket.description,
+        "status": ticket.status,
+        "category": ticket.category,
+        "priority": ticket.priority,
+        "ai_summary": ticket.ai_summary,
+        "created_at": ticket.created_at,
+        "updated_at": ticket.updated_at,
+        "status_history": history
     }

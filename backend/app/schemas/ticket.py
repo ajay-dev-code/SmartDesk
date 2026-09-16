@@ -23,9 +23,28 @@ class TicketResponse(BaseModel):
     class Config:
         from_attributes = True
 
+
 class TicketListResponse(BaseModel):
-        items: list[TicketResponse]
-        page: int
-        page_size: int
-        total: int
-        total_pages: int    
+    items: list[TicketResponse]
+    page: int
+    page_size: int
+    total: int
+    total_pages: int
+
+
+class StatusHistoryResponse(BaseModel):
+    id: int
+    previous_status: str | None = None
+    new_status: str
+    remark: str | None = None
+    admin_user_id: int
+    created_at: object
+
+    class Config:
+        from_attributes = True
+
+
+class TicketDetailResponse(TicketResponse):
+    created_at: object
+    updated_at: object | None = None
+    status_history: list[StatusHistoryResponse] = []
