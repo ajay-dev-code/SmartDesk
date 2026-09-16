@@ -48,3 +48,7 @@ class TicketDetailResponse(TicketResponse):
     created_at: object
     updated_at: object | None = None
     status_history: list[StatusHistoryResponse] = []
+    
+class StatusUpdateRequest(BaseModel):
+    status: str
+    remark: str | None = None    
