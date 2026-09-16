@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.database.database import get_db
 from app.models.ticket import Ticket
 from app.schemas.ticket import TicketCreate, TicketResponse
-
+from app.services.ai_service import classify_ticket
 
 router = APIRouter(
     prefix="/api/tickets",
@@ -38,6 +38,16 @@ def create_ticket(
 
     # Example: TKT-00001
     ticket.reference_number = f"TKT-{ticket.id:05d}"
+
+    # AI classification
+    ai_result = classify_ticket(
+        ticket.subject,
+        ticket.description
+    )
+
+    ticket.category = ai_result["category"]
+    ticket.priority = ai_result["priority"]
+    ticket.ai_summary = ai_result["summary"]
 
     db.commit()
     db.refresh(ticket)
