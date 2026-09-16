@@ -24,6 +24,9 @@ router = APIRouter(
 )
 def get_all_tickets(
     search: str | None = Query(default=None),
+    status_filter: str | None = Query(default=None, alias="status"),
+    category_filter: str | None = Query(default=None, alias="category"),
+    priority_filter: str | None = Query(default=None, alias="priority"),
     db: Session = Depends(get_db),
     current_admin=Depends(get_current_admin)
 ):
@@ -38,6 +41,14 @@ def get_all_tickets(
             (Ticket.customer_email.like(search_value))
         )
 
+    if status_filter:
+        query = query.filter(Ticket.status == status_filter) 
+
+    if category_filter:
+        query = query.filter(Ticket.category == category_filter)    
+
+    if priority_filter:
+        query = query.filter(Ticket.priority == priority_filter)
     tickets = (
         query
         .order_by(Ticket.created_at.desc())
