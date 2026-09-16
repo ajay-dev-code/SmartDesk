@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, Query
 from sqlalchemy.orm import Session
 
 from app.database.database import get_db
 from app.models.ticket import Ticket
 from app.schemas.ticket import TicketCreate, TicketResponse
 from app.services.ai_service import classify_ticket
+from app.auth.dependencies import get_current_admin
 
 router = APIRouter(
     prefix="/api/tickets",
@@ -17,6 +18,34 @@ router = APIRouter(
     response_model=TicketResponse,
     status_code=status.HTTP_201_CREATED
 )
+@router.get(
+    "",
+    response_model=list[TicketResponse]
+)
+def get_all_tickets(
+    search: str | None = Query(default=None),
+    db: Session = Depends(get_db),
+    current_admin=Depends(get_current_admin)
+):
+    query = db.query(Ticket)
+
+    if search:
+        search_value = f"%{search}%"
+
+        query = query.filter(
+            (Ticket.reference_number.like(search_value)) |
+            (Ticket.subject.like(search_value)) |
+            (Ticket.customer_email.like(search_value))
+        )
+
+    tickets = (
+        query
+        .order_by(Ticket.created_at.desc())
+        .all()
+    )
+
+    return tickets
+
 def create_ticket(
     ticket_data: TicketCreate,
     db: Session = Depends(get_db)
