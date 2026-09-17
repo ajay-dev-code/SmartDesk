@@ -1,12 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartDesk</title>
 
-    <meta http-equiv="refresh" content="0; url=login.html">
+    <title>SmartDesk - Support Portal</title>
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
+
+    <!-- =========================
+         Public Header
+    ========================== -->
+
+    <header class="public-header">
+
+        <div class="public-brand">
+
+            <div class="public-brand-icon">
+                S
+            </div>
+
+            <div class="public-brand-name">
+                <strong>SmartDesk</strong>
+                <span>support portal</span>
+            </div>
+
+        </div>
+
+        <a href="login.html" class="admin-login-button">
+            Admin login
+        </a>
+
+    </header>
+
+
+    <!-- =========================
+         Public Main
+    ========================== -->
+
+    <main class="public-main">
+
+        <div class="public-intro">
+
+            <h1>Raise a support ticket</h1>
+
+            <p>
+                Tell us what went wrong. We triage every ticket automatically
+                and reply by email with a reference number.
+            </p>
+
+        </div>
+
+
+        <div class="public-ticket-layout">
+
+            <!-- =========================
+                 Ticket Form
+            ========================== -->
+
+            <section class="public-form-card">
+
+                <form id="ticketForm">
+
+                    <div class="public-form-row">
+
+                        <div class="public-form-group">
+
+                            <label for="customerName">
+                                Name <span>*</span>
+                            </label>
+
+                            <input type="text" id="customerName" name="customerName" placeholder="Ajay" required>
+
+                        </div>
+
+
+                        <div class="public-form-group">
+
+                            <label for="customerEmail">
+                                Email <span>*</span>
+                            </label>
+
+                            <input type="email" id="customerEmail" name="customerEmail" placeholder="Ajay@company.com"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="public-form-group">
+
+                        <label for="subject">
+                            Subject <span>*</span>
+                        </label>
+
+                        <input type="text" id="subject" name="subject" placeholder="Invoice shows the wrong tax amount"
+                            required>
+
+                    </div>
+
+
+                    <div class="public-form-group">
+
+                        <div class="description-label">
+
+                            <label for="description">
+                                Description <span>*</span>
+                            </label>
+
+                            <span id="characterCount">
+                                0 characters
+                            </span>
+
+                        </div>
+
+                        <textarea id="description" name="description" rows="7"
+                            placeholder="Describe what happened, what you expected, and any steps to reproduce it."
+                            required></textarea>
+
+                    </div>
+
+
+                    <div class="public-form-footer">
+
+                        <div class="validation-note">
+                            Validated in the browser and again on the server.
+                        </div>
+
+                        <button type="submit" id="submitTicketButton" class="submit-ticket-button">
+                            Submit ticket
+                        </button>
+
+                    </div>
+
+
+                    <div id="ticketMessage" class="ticket-message"></div>
+
+                </form>
+
+            </section>
+
+
+            <!-- =========================
+                 Right Information
+            ========================== -->
+
+            <aside class="public-info-column">
+
+
+                <!-- What happens next -->
+
+                <div class="public-info-card">
+
+                    <h2>What happens next</h2>
+
+
+                    <div class="process-step">
+
+                        <div class="step-number">
+                            1
+                        </div>
+
+                        <div class="step-content">
+
+                            <strong>Instant reference number</strong>
+
+                            <p>
+                                You get a number like TKT-00042 to quote
+                                in any follow-up.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="process-step">
+
+                        <div class="step-number">
+                            2
+                        </div>
+
+                        <div class="step-content">
+
+                            <strong>Automatic triage</strong>
+
+                            <p>
+                                Category, priority and a short summary
+                                are suggested by the AI service.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="process-step">
+
+                        <div class="step-number">
+                            3
+                        </div>
+
+                        <div class="step-content">
+
+                            <strong>An agent takes over</strong>
+
+                            <p>
+                                Every status change is recorded and
+                                emailed to you.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AI Triage -->
+
+                <div class="ai-triage-card">
+
+                    <div class="ai-triage-label">
+                        AI TRIAGE
+                    </div>
+
+                    <p>
+                        Your subject and description are sent to the
+                        classifier, which returns a category, a priority
+                        and a one-line summary. If it fails, the ticket is
+                        still saved as
+                        <strong>General</strong>
+                        /
+                        <strong>Medium</strong>.
+                    </p>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+
+    <script src="js/ticket.js"></script>
+
 </body>
+
 </html>
