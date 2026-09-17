@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartDesk - Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- Sidebar -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="brand-icon">S</div>
+
+                <div>
+                    <h1>SmartDesk</h1>
+                    <span>Support Management</span>
+                </div>
+
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html" class="nav-item active">
+                    <span>▦</span>
+                    Dashboard
+                </a>
+
+                <a href="#" class="nav-item">
+                    <span>▤</span>
+                    Tickets
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="admin-info">
+                    <div class="admin-avatar">A</div>
+
+                    <div>
+                        <strong id="adminName">Admin</strong>
+                        <span>Administrator</span>
+                    </div>
+                </div>
+
+                <button id="logoutButton" class="logout-button">
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+
+        <main class="main-content">
+
+            <header class="page-header">
+
+                <div>
+                    <h2>Dashboard</h2>
+                    <p>Overview of your support tickets</p>
+                </div>
+
+            </header>
+
+
+            <!-- Dashboard Cards -->
+
+            <section class="dashboard-grid">
+
+                <div class="dashboard-card">
+
+                    <div class="card-label">
+                        Total Tickets
+                    </div>
+
+                    <div id="totalTickets" class="card-value">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="card-label">
+                        Open
+                    </div>
+
+                    <div id="openTickets" class="card-value">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="card-label">
+                        In Progress
+                    </div>
+
+                    <div id="inProgressTickets" class="card-value">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="card-label">
+                        Resolved
+                    </div>
+
+                    <div id="resolvedTickets" class="card-value">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <div class="card-label">
+                        Closed
+                    </div>
+
+                    <div id="closedTickets" class="card-value">
+                        -
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <div id="dashboardMessage" class="dashboard-message"></div>
+
+        </main>
+
+    </div>
+
+
+    <script src="js/dashboard.js"></script>
+
+</body>
+</html>
