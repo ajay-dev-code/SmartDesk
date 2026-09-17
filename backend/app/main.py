@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 
 from app.database.database import engine
@@ -6,6 +7,14 @@ from app.routes.auth import router as auth_router
 from app.routes.tickets import router as ticket_router
 
 app = FastAPI(title="SmartDesk API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(auth_router)
 app.include_router(ticket_router)
