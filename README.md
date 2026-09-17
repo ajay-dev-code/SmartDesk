@@ -227,8 +227,7 @@ Access Protected API
 | GET | `/api/tickets/{id}` | JWT | Get ticket details and status history |
 | PATCH | `/api/tickets/{id}/status` | Admin JWT | Update ticket status and create history |
 | PATCH | `/api/tickets/{id}/classification` | Admin JWT | Correct ticket category and priority |
-| GET | `/api/tickets/dashboard` | Admin JWT | Get ticket status counts |
-
+| GET | `/api/tickets/dashboard` | Admin JWT | Get dashboard ticket statistics and recent activity |
 ### Example Login Request
 
 json
@@ -256,6 +255,43 @@ status_history
   │
   │ 1
 tickets
+
+### Database Setup
+
+The database schema is provided in:
+
+`database/schema.sql`
+
+To create the database and tables:
+
+1. Open MySQL Workbench.
+2. Open `database/schema.sql`.
+3. Execute the script.
+
+The script creates:
+
+- `smartdesk_db`
+- `users`
+- `tickets`
+- `status_history`
+
+The `status_history` table maintains relationships with both `tickets` and `users` using foreign keys.
+
+### Admin Seed Data
+
+After creating the database, run the admin seed script:
+
+```bash
+cd backend
+python seed_admin.py
+
+The default administrator account created by the seed script is:
+
+- Email: Value configured in `ADMIN_EMAIL`
+- Password: Value configured in `ADMIN_PASSWORD`
+- Role: `ADMIN`
+
+The password is securely hashed before being stored in the database.
 
 ## AI Integration
 
@@ -301,3 +337,12 @@ Make sure the following are installed:
 ```bash
 git clone <your-github-repository-url>
 cd Smartdesk
+### 2. Backend Setup
+
+cd backend
+
+python -m venv venv
+
+venv\Scripts\activate
+
+pip install -r requirements.txt
