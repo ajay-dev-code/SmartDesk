@@ -180,6 +180,8 @@ async function loadTickets() {
 
                 const row = document.createElement("tr");
 
+                row.classList.add("ticket-row");
+
                 row.innerHTML = `
 
                     <td>
@@ -219,6 +221,13 @@ async function loadTickets() {
                 `;
 
                 ticketTableBody.appendChild(row);
+
+                row.addEventListener("click", function () {
+
+                    window.location.href =
+                        `ticket-detail.html?id=${ticket.id}`;
+
+});
 
             });
         }

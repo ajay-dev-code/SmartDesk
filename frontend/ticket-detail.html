@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartDesk - Ticket Details</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- =========================
+             Sidebar
+        ========================== -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="brand-icon">S</div>
+
+                <div>
+                    <h1>SmartDesk</h1>
+                    <p>Support Management</p>
+                </div>
+
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html" class="nav-link">
+                    Dashboard
+                </a>
+
+                <a href="tickets.html" class="nav-link active">
+                    Tickets
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="admin-info">
+
+                    <div class="admin-avatar">
+                        A
+                    </div>
+
+                    <div>
+                        <strong id="adminName">Admin</strong>
+                        <span>Administrator</span>
+                    </div>
+
+                </div>
+
+                <button id="logoutButton" class="logout-button">
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =========================
+             Main Content
+        ========================== -->
+
+        <main class="main-content">
+
+            <div class="page-header">
+
+                <div>
+
+                    <a href="tickets.html" class="back-link">
+                        ← Back to Tickets
+                    </a>
+
+                    <h2>Ticket Details</h2>
+
+                    <p>
+                        View ticket information and support details
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 Message
+            ========================== -->
+
+            <div id="ticketMessage" class="ticket-message"></div>
+
+
+            <!-- =========================
+                 Ticket Details
+            ========================== -->
+
+            <section class="detail-card">
+
+                <div class="detail-header">
+
+                    <div>
+
+                        <span class="detail-label">
+                            Reference
+                        </span>
+
+                        <h3 id="ticketReference">
+                            Loading...
+                        </h3>
+
+                    </div>
+
+
+                    <div id="ticketStatus">
+                        -
+                    </div>
+
+                </div>
+
+
+                <div class="detail-grid">
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Customer Name
+                        </span>
+
+                        <strong id="customerName">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Customer Email
+                        </span>
+
+                        <strong id="customerEmail">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Subject
+                        </span>
+
+                        <strong id="ticketSubject">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            Created Date
+                        </span>
+
+                        <strong id="createdDate">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="detail-description">
+
+                    <span class="detail-label">
+                        Description
+                    </span>
+
+                    <p id="ticketDescription">
+                        -
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 AI Classification
+            ========================== -->
+
+            <section class="detail-card">
+
+                <div class="section-title">
+
+                    <div>
+
+                        <h3>AI Classification</h3>
+
+                        <p>
+                            Classification and summary generated by AI
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ai-grid">
+
+                    <div class="ai-item">
+
+                        <span class="detail-label">
+                            Category
+                        </span>
+
+                        <strong id="ticketCategory">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="ai-item">
+
+                        <span class="detail-label">
+                            Priority
+                        </span>
+
+                        <strong id="ticketPriority">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="ai-summary">
+
+                    <span class="detail-label">
+                        AI Summary
+                    </span>
+
+                    <p id="aiSummary">
+                        -
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 Status History
+            ========================== -->
+
+            <section class="detail-card">
+
+                <div class="section-title">
+
+                    <div>
+
+                        <h3>Status History</h3>
+
+                        <p>
+                            Previous status changes and admin remarks
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div id="statusHistory" class="history-list">
+
+                    <div class="empty-state">
+                        Loading history...
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="js/ticket-detail.js"></script>
+
+</body>
+
+</html>

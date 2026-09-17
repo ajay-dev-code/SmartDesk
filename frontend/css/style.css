@@ -722,3 +722,241 @@ tbody tr:hover {
     background: #ecfdf5;
     color: #059669;
 }
+/* =========================
+   Ticket Detail Page
+========================= */
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #2563eb;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.ticket-message {
+    margin-bottom: 16px;
+    font-size: 13px;
+}
+
+
+/* =========================
+   Detail Card
+========================= */
+
+.detail-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.detail-header h3 {
+    margin: 5px 0 0;
+    font-size: 20px;
+    color: #111827;
+}
+
+
+/* =========================
+   Labels
+========================= */
+
+.detail-label {
+    display: block;
+    margin-bottom: 6px;
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+
+/* =========================
+   Detail Grid
+========================= */
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+    padding: 22px 0;
+}
+
+.detail-item strong {
+    color: #111827;
+    font-size: 14px;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+
+/* =========================
+   Description
+========================= */
+
+.detail-description {
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.detail-description p {
+    margin: 8px 0 0;
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* =========================
+   Section Title
+========================= */
+
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.section-title h3 {
+    margin: 0 0 5px;
+    color: #111827;
+    font-size: 16px;
+}
+
+.section-title p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+
+/* =========================
+   AI Section
+========================= */
+
+.ai-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.ai-item {
+    padding: 16px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.ai-item strong {
+    color: #111827;
+    font-size: 14px;
+}
+
+.ai-summary {
+    padding: 16px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.ai-summary p {
+    margin: 8px 0 0;
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* =========================
+   Status History
+========================= */
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.history-item {
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #f8fafc;
+}
+
+.history-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.history-status strong {
+    color: #111827;
+    font-size: 13px;
+}
+
+.history-remark {
+    margin: 0 0 8px;
+    color: #374151;
+    font-size: 13px;
+}
+
+.history-date {
+    color: #6b7280;
+    font-size: 11px;
+}
+
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 768px) {
+
+    .detail-card {
+        padding: 18px;
+    }
+
+    .detail-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .ai-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+.ticket-row {
+    cursor: pointer;
+}
+
+.ticket-row:hover {
+    background: #f8fafc;
+}
