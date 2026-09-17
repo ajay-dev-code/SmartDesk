@@ -297,6 +297,83 @@
 
             </section>
 
+            <!-- =========================
+                 Admin Status Update
+            ========================= -->
+
+            <section class="detail-card">
+
+                <div class="section-title">
+
+                    <div>
+                         <h3>Update Ticket Status</h3>
+
+                            <p>
+                                Change the current ticket status and add an admin remark
+                            </p>
+                    </div>
+
+                </div>
+
+
+                 <div class="status-update-form">
+
+                     <div class="form-group">
+
+                        <label for="statusSelect">
+                            Status
+                        </label>
+
+                            <select id="statusSelect">
+
+                        <option value="Open">
+                             Open
+                        </option>
+
+                        <option value="In Progress">
+                            In Progress
+                        </option>
+
+                        <option value="Resolved">
+                            Resolved
+                        </option>
+
+                        <option value="Closed">
+                            Closed
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="statusRemark">
+                        Remark
+                    </label>
+
+                <textarea
+                    id="statusRemark"
+                    rows="4"
+                    placeholder="Enter a remark about this status update"
+                ></textarea>
+
+            </div>
+
+
+                   <button
+                        type="button"
+                        id="updateStatusButton"
+                        class="primary-button"
+                    >
+                        Update Status
+                    </button>
+
+                </div>
+
+            </section>
+
         </main>
 
     </div>

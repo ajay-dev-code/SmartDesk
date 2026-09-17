@@ -960,3 +960,68 @@ tbody tr:hover {
 .ticket-row:hover {
     background: #f8fafc;
 }
+/* =========================
+   Status Update Form
+========================= */
+
+.status-update-form {
+    max-width: 700px;
+}
+
+.status-update-form .form-group {
+    margin-bottom: 18px;
+}
+
+.status-update-form label {
+    display: block;
+    margin-bottom: 7px;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-update-form select,
+.status-update-form textarea {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #111827;
+    font-family: inherit;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.status-update-form select:focus,
+.status-update-form textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.status-update-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.primary-button {
+    padding: 11px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.primary-button:hover {
+    background: #1d4ed8;
+}
+
+.primary-button:disabled {
+    background: #93c5fd;
+    cursor: not-allowed;
+}

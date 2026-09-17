@@ -285,3 +285,169 @@ document.getElementById("logoutButton").addEventListener(
         window.location.href = "login.html";
     }
 );
+// =========================
+// Update Ticket Status
+// =========================
+
+const statusSelect = document.getElementById("statusSelect");
+const statusRemark = document.getElementById("statusRemark");
+const updateStatusButton =
+    document.getElementById("updateStatusButton");
+
+
+updateStatusButton.addEventListener(
+    "click",
+    async function () {
+
+        const newStatus = statusSelect.value;
+        const remark = statusRemark.value.trim();
+
+
+        // =========================
+        // Validate Remark
+        // =========================
+
+        if (!remark) {
+
+            message.textContent =
+                "Please enter a remark.";
+
+            message.style.color = "#dc2626";
+
+            return;
+        }
+
+
+        updateStatusButton.disabled = true;
+
+        updateStatusButton.textContent =
+            "Updating...";
+
+        message.textContent = "";
+
+
+        try {
+
+            const response = await fetch(
+                `${API_BASE_URL}/api/tickets/${ticketId}/status`,
+                {
+                    method: "PATCH",
+
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+
+                    body: JSON.stringify({
+                        status: newStatus,
+                        remark: remark
+                    })
+                }
+            );
+
+
+            const data = await response.json();
+
+
+            // =========================
+            // Authentication Error
+            // =========================
+
+            if (
+                response.status === 401 ||
+                response.status === 403
+            ) {
+
+                localStorage.removeItem(
+                    "access_token"
+                );
+
+                localStorage.removeItem(
+                    "user"
+                );
+
+                window.location.href =
+                    "login.html";
+
+                return;
+            }
+
+
+            // =========================
+            // API Error
+            // =========================
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.detail ||
+                    "Failed to update ticket status."
+                );
+            }
+
+
+            // =========================
+            // Update UI
+            // =========================
+
+            const statusElement =
+                document.getElementById("ticketStatus");
+
+
+            statusElement.innerHTML = `
+                <span class="ticket-status status-${data.status
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}">
+                    ${data.status}
+                </span>
+            `;
+
+
+            // Update status dropdown
+
+            statusSelect.value =
+                data.status;
+
+
+            // Clear remark
+
+            statusRemark.value = "";
+
+
+            // Refresh history
+
+            displayStatusHistory(
+                data.status_history
+            );
+
+
+            message.textContent =
+                "Ticket status updated successfully.";
+
+            message.style.color =
+                "#059669";
+
+
+        } catch (error) {
+
+            console.error(
+                "Status update error:",
+                error
+            );
+
+            message.textContent =
+                error.message;
+
+            message.style.color =
+                "#dc2626";
+
+        } finally {
+
+            updateStatusButton.disabled =
+                false;
+
+            updateStatusButton.textContent =
+                "Update Status";
+        }
+    }
+);

@@ -259,6 +259,181 @@ def get_ticket_detail(
         "status_history": history
     }
 
+# =========================
+# Update Ticket Status
+# =========================
+
+@router.patch(
+    "/{ticket_id}/status",
+    response_model=TicketDetailResponse
+)
+def update_ticket_status(
+    ticket_id: int,
+    status_data: StatusUpdateRequest,
+    db: Session = Depends(get_db),
+    current_admin=Depends(get_current_admin)
+):
+
+    # Find ticket
+
+    ticket = (
+        db.query(Ticket)
+        .filter(Ticket.id == ticket_id)
+        .first()
+    )
+
+    if ticket is None:
+
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Ticket not found"
+        )
+
+
+    # =========================
+    # Allowed Statuses
+    # =========================
+
+    allowed_statuses = {
+        "Open",
+        "In Progress",
+        "Resolved",
+        "Closed"
+    }
+
+    new_status = status_data.status.strip()
+
+
+    # =========================
+    # Validate Status
+    # =========================
+
+    if new_status not in allowed_statuses:
+
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid status. Allowed values: Open, In Progress, Resolved, Closed"
+        )
+
+
+    # =========================
+    # Check Same Status
+    # =========================
+
+    if ticket.status == new_status:
+
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Ticket is already in this status"
+        )
+
+
+    # =========================
+    # Save Previous Status
+    # =========================
+
+    previous_status = ticket.status
+
+
+    # =========================
+    # Update Ticket
+    # =========================
+
+    ticket.status = new_status
+
+
+    # =========================
+    # Create Status History
+    # =========================
+
+    history = StatusHistory(
+
+        ticket_id=ticket.id,
+
+        previous_status=previous_status,
+
+        new_status=new_status,
+
+        remark=status_data.remark.strip()
+        if status_data.remark
+        else None,
+
+        admin_user_id=current_admin.id
+    )
+
+    db.add(history)
+
+
+    # =========================
+    # Save Changes
+    # =========================
+
+    db.commit()
+
+    db.refresh(ticket)
+
+
+    # =========================
+    # Get Status History
+    # =========================
+
+    status_history = (
+        db.query(StatusHistory)
+        .filter(
+            StatusHistory.ticket_id == ticket.id
+        )
+        .order_by(
+            StatusHistory.created_at.asc()
+        )
+        .all()
+    )
+
+
+    # =========================
+    # Return Ticket Details
+    # =========================
+
+    return {
+
+        "id": ticket.id,
+
+        "reference_number":
+            ticket.reference_number,
+
+        "customer_name":
+            ticket.customer_name,
+
+        "customer_email":
+            ticket.customer_email,
+
+        "subject":
+            ticket.subject,
+
+        "description":
+            ticket.description,
+
+        "status":
+            ticket.status,
+
+        "category":
+            ticket.category,
+
+        "priority":
+            ticket.priority,
+
+        "ai_summary":
+            ticket.ai_summary,
+
+        "created_at":
+            ticket.created_at,
+
+        "updated_at":
+            ticket.updated_at,
+
+        "status_history":
+            status_history
+    }    
+
 # --------------------------------------------------
 # UPDATE TICKET CATEGORY & PRIORITY
 # --------------------------------------------------
