@@ -52,7 +52,14 @@ class TicketDetailResponse(TicketResponse):
 class StatusUpdateRequest(BaseModel):
     status: str
     remark: str | None = None  
-    
+
 class ClassificationUpdateRequest(BaseModel):
     category: str
-    priority: str      
+    priority: str 
+
+class DashboardResponse(BaseModel):
+    total_tickets: int
+    open_tickets: int
+    in_progress_tickets: int
+    resolved_tickets: int
+    closed_tickets: int         

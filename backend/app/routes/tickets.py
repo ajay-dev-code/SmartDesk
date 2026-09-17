@@ -10,7 +10,8 @@ from app.schemas.ticket import (
     TicketListResponse,
     TicketDetailResponse,
     StatusUpdateRequest,
-    ClassificationUpdateRequest
+    ClassificationUpdateRequest,
+    DashboardResponse
 )
 from app.auth.dependencies import get_current_admin
 from app.services.ai_service import classify_ticket
@@ -161,7 +162,51 @@ def get_all_tickets(
         "total_pages": total_pages
     }
 
+# --------------------------------------------------
+# ADMIN DASHBOARD
+# --------------------------------------------------
 
+@router.get(
+    "/dashboard",
+    response_model=DashboardResponse
+)
+def get_dashboard(
+    db: Session = Depends(get_db),
+    current_admin=Depends(get_current_admin)
+):
+    total_tickets = db.query(Ticket).count()
+
+    open_tickets = (
+        db.query(Ticket)
+        .filter(Ticket.status == "Open")
+        .count()
+    )
+
+    in_progress_tickets = (
+        db.query(Ticket)
+        .filter(Ticket.status == "In Progress")
+        .count()
+    )
+
+    resolved_tickets = (
+        db.query(Ticket)
+        .filter(Ticket.status == "Resolved")
+        .count()
+    )
+
+    closed_tickets = (
+        db.query(Ticket)
+        .filter(Ticket.status == "Closed")
+        .count()
+    )
+
+    return {
+        "total_tickets": total_tickets,
+        "open_tickets": open_tickets,
+        "in_progress_tickets": in_progress_tickets,
+        "resolved_tickets": resolved_tickets,
+        "closed_tickets": closed_tickets
+    }
 # --------------------------------------------------
 # GET TICKET DETAIL
 # --------------------------------------------------
