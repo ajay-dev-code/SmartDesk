@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartDesk - Tickets</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- Sidebar -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="brand-icon">S</div>
+
+                <div>
+                    <h1>SmartDesk</h1>
+                    <span>Support Management</span>
+                </div>
+
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html" class="nav-item">
+                    <span>▦</span>
+                    Dashboard
+                </a>
+
+                <a href="tickets.html" class="nav-item active">
+                    <span>▤</span>
+                    Tickets
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="admin-info">
+
+                    <div class="admin-avatar">A</div>
+
+                    <div>
+                        <strong id="adminName">Admin</strong>
+                        <span>Administrator</span>
+                    </div>
+
+                </div>
+
+                <button id="logoutButton" class="logout-button">
+                    Logout
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+
+        <main class="main-content">
+
+            <header class="page-header">
+
+                <div>
+                    <h2>Tickets</h2>
+                    <p>Manage and track customer support tickets</p>
+                </div>
+
+            </header>
+
+
+            <!-- Search and Filters -->
+
+            <section class="ticket-toolbar">
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search by reference, subject or email..."
+                    >
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <select id="statusFilter">
+
+                        <option value="">All Status</option>
+                        <option value="Open">Open</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Resolved">Resolved</option>
+                        <option value="Closed">Closed</option>
+
+                    </select>
+
+
+                    <select id="categoryFilter">
+
+                        <option value="">All Categories</option>
+                        <option value="Technical">Technical</option>
+                        <option value="Billing">Billing</option>
+                        <option value="Account">Account</option>
+                        <option value="General">General</option>
+
+                    </select>
+
+
+                    <select id="priorityFilter">
+
+                        <option value="">All Priorities</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+
+                    </select>
+
+                </div>
+
+            </section>
+
+
+            <!-- Ticket Table -->
+
+            <section class="ticket-table-card">
+
+                <div class="table-header">
+
+                    <div>
+                        <h3>Support Tickets</h3>
+                        <span id="ticketCount">0 tickets</span>
+                    </div>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Reference</th>
+                                <th>Customer</th>
+                                <th>Subject</th>
+                                <th>Status</th>
+                                <th>Category</th>
+                                <th>Priority</th>
+                                <th>Created</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="ticketTableBody">
+
+                            <tr>
+                                <td colspan="7" class="empty-state">
+                                    No tickets to display
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- Pagination -->
+
+                <div class="pagination">
+
+                    <button id="previousPage" disabled>
+                        Previous
+                    </button>
+
+                    <span id="pageInfo">
+                        Page 1
+                    </span>
+
+                    <button id="nextPage" disabled>
+                        Next
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <div id="ticketsMessage" class="dashboard-message"></div>
+
+        </main>
+
+    </div>
+
+
+    <script src="js/tickets.js"></script>
+
+</body>
+</html>
