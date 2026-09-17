@@ -265,6 +265,161 @@
 
             </section>
 
+            <!-- =========================
+                Admin Classification Correction
+            ========================== -->
+
+            <div class="classification-update">
+
+                <div class="classification-title">
+
+                    <div>
+
+                        <h4>Correct Classification</h4>
+
+                        <p>
+                            Adjust the AI classification when necessary
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="classification-grid">
+
+                    <div class="form-group">
+
+                        <label for="categorySelect">
+                            Category
+                        </label>
+
+                        <select id="categorySelect">
+
+                            <option value="Technical">
+                                Technical
+                            </option>
+
+                            <option value="Billing">
+                                Billing
+                            </option>
+
+                            <option value="Account">
+                                Account
+                            </option>
+
+                            <option value="General">
+                                General
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="prioritySelect">
+                            Priority
+                        </label>
+
+                        <select id="prioritySelect">
+
+                            <option value="Low">
+                                Low
+                            </option>
+
+                            <option value="Medium">
+                                Medium
+                            </option>
+
+                            <option value="High">
+                                High
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <button type="button" id="updateClassificationButton" class="primary-button">
+                    Save Classification
+                </button>
+
+            </div>
+
+
+            <!-- =========================
+                 Admin Status Update
+            ========================= -->
+
+            <section class="detail-card">
+
+                <div class="section-title">
+
+                    <div>
+                        <h3>Update Ticket Status</h3>
+
+                        <p>
+                            Change the current ticket status and add an admin remark
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="status-update-form">
+
+                    <div class="form-group">
+
+                        <label for="statusSelect">
+                            Status
+                        </label>
+
+                        <select id="statusSelect">
+
+                            <option value="Open">
+                                Open
+                            </option>
+
+                            <option value="In Progress">
+                                In Progress
+                            </option>
+
+                            <option value="Resolved">
+                                Resolved
+                            </option>
+
+                            <option value="Closed">
+                                Closed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="statusRemark">
+                            Remark
+                        </label>
+
+                        <textarea id="statusRemark" rows="4"
+                            placeholder="Enter a remark about this status update"></textarea>
+
+                    </div>
+
+
+                    <button type="button" id="updateStatusButton" class="primary-button">
+                        Update Status
+                    </button>
+
+                </div>
+
+            </section>
 
             <!-- =========================
                  Status History
@@ -292,83 +447,6 @@
                     <div class="empty-state">
                         Loading history...
                     </div>
-
-                </div>
-
-            </section>
-
-            <!-- =========================
-                 Admin Status Update
-            ========================= -->
-
-            <section class="detail-card">
-
-                <div class="section-title">
-
-                    <div>
-                         <h3>Update Ticket Status</h3>
-
-                            <p>
-                                Change the current ticket status and add an admin remark
-                            </p>
-                    </div>
-
-                </div>
-
-
-                 <div class="status-update-form">
-
-                     <div class="form-group">
-
-                        <label for="statusSelect">
-                            Status
-                        </label>
-
-                            <select id="statusSelect">
-
-                        <option value="Open">
-                             Open
-                        </option>
-
-                        <option value="In Progress">
-                            In Progress
-                        </option>
-
-                        <option value="Resolved">
-                            Resolved
-                        </option>
-
-                        <option value="Closed">
-                            Closed
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="statusRemark">
-                        Remark
-                    </label>
-
-                <textarea
-                    id="statusRemark"
-                    rows="4"
-                    placeholder="Enter a remark about this status update"
-                ></textarea>
-
-            </div>
-
-
-                   <button
-                        type="button"
-                        id="updateStatusButton"
-                        class="primary-button"
-                    >
-                        Update Status
-                    </button>
 
                 </div>
 

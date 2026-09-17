@@ -192,6 +192,7 @@ body {
     }
 
 }
+
 /* =========================
    Dashboard
 ========================= */
@@ -459,6 +460,7 @@ body {
     }
 
 }
+
 /* =========================
    Ticket List
 ========================= */
@@ -674,6 +676,7 @@ tbody tr:hover {
     }
 
 }
+
 /* Ticket Status & Priority */
 
 .ticket-status,
@@ -722,6 +725,7 @@ tbody tr:hover {
     background: #ecfdf5;
     color: #059669;
 }
+
 /* =========================
    Ticket Detail Page
 ========================= */
@@ -888,79 +892,6 @@ tbody tr:hover {
 
 
 /* =========================
-   Status History
-========================= */
-
-.history-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.history-item {
-    padding: 16px;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    background: #f8fafc;
-}
-
-.history-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-}
-
-.history-status strong {
-    color: #111827;
-    font-size: 13px;
-}
-
-.history-remark {
-    margin: 0 0 8px;
-    color: #374151;
-    font-size: 13px;
-}
-
-.history-date {
-    color: #6b7280;
-    font-size: 11px;
-}
-
-
-/* =========================
-   Mobile
-========================= */
-
-@media (max-width: 768px) {
-
-    .detail-card {
-        padding: 18px;
-    }
-
-    .detail-header {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .detail-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-
-    .ai-grid {
-        grid-template-columns: 1fr;
-    }
-
-}
-.ticket-row {
-    cursor: pointer;
-}
-
-.ticket-row:hover {
-    background: #f8fafc;
-}
-/* =========================
    Status Update Form
 ========================= */
 
@@ -1005,6 +936,80 @@ tbody tr:hover {
     min-height: 100px;
 }
 
+
+/* =========================
+   Classification Correction
+========================= */
+
+.classification-update {
+    margin-top: 22px;
+    margin-bottom: 35px;
+    padding-top: 22px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.classification-title {
+    margin-bottom: 18px;
+}
+
+.classification-title h4 {
+    margin: 0 0 5px;
+    color: #111827;
+    font-size: 14px;
+}
+
+.classification-title p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.classification-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.classification-grid .form-group {
+    margin: 0;
+}
+
+.classification-grid label {
+    display: block;
+    margin-bottom: 7px;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.classification-grid select {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #111827;
+    font-family: inherit;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.classification-grid select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.classification-update .primary-button {
+    margin-top: 4px;
+}
+
+
+/* =========================
+   Primary Button
+========================= */
+
 .primary-button {
     padding: 11px 18px;
     border: none;
@@ -1024,4 +1029,89 @@ tbody tr:hover {
 .primary-button:disabled {
     background: #93c5fd;
     cursor: not-allowed;
+}
+
+
+/* =========================
+   Status History
+========================= */
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.history-item {
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #f8fafc;
+}
+
+.history-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.history-status strong {
+    color: #111827;
+    font-size: 13px;
+}
+
+.history-remark {
+    margin: 0 0 8px;
+    color: #374151;
+    font-size: 13px;
+}
+
+.history-date {
+    color: #6b7280;
+    font-size: 11px;
+}
+
+
+/* =========================
+   Ticket Row
+========================= */
+
+.ticket-row {
+    cursor: pointer;
+}
+
+.ticket-row:hover {
+    background: #f8fafc;
+}
+
+
+/* =========================
+   Ticket Detail Mobile
+========================= */
+
+@media (max-width: 768px) {
+
+    .detail-card {
+        padding: 18px;
+    }
+
+    .detail-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .ai-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .classification-grid {
+        grid-template-columns: 1fr;
+    }
+
 }
