@@ -1,84 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>SmartDesk - Dashboard</title>
 
     <link rel="stylesheet" href="css/style.css">
+
 </head>
+
 
 <body>
 
     <div class="app-layout">
 
-        <!-- Sidebar -->
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
 
         <aside class="sidebar">
 
+
             <div class="sidebar-brand">
 
-                <div class="brand-icon">S</div>
+                <div class="brand-icon">
+                    S
+                </div>
 
                 <div>
+
                     <h1>SmartDesk</h1>
-                    <span>Support Management</span>
+
+                    <span>
+                        Support Management
+                    </span>
+
                 </div>
 
             </div>
+
+
 
             <nav class="sidebar-nav">
 
-                <a href="dashboard.html" class="nav-item active">
-                    <span>▦</span>
+
+                <a
+                    href="dashboard.html"
+                    class="nav-item active"
+                >
+
+                    <span class="nav-dot"></span>
+
                     Dashboard
+
                 </a>
 
-                <a href="#" class="nav-item">
-                    <span>▤</span>
+
+
+                <a
+                    href="tickets.html"
+                    class="nav-item"
+                >
+
+                    <span class="nav-dot"></span>
+
                     Tickets
+
                 </a>
+
+
+
+                <a
+                    href="#"
+                    class="nav-item"
+                    id="ticketDetailNav"
+                >
+
+                    <span class="nav-dot"></span>
+
+                    Ticket Detail
+
+                </a>
+
 
             </nav>
 
+
+
             <div class="sidebar-bottom">
 
+
                 <div class="admin-info">
-                    <div class="admin-avatar">A</div>
+
+                    <div class="admin-avatar">
+                        A
+                    </div>
+
 
                     <div>
-                        <strong id="adminName">Admin</strong>
-                        <span>Administrator</span>
+
+                        <strong id="adminName">
+                            Admin
+                        </strong>
+
+                        <span>
+                            Administrator
+                        </span>
+
                     </div>
+
                 </div>
 
-                <button id="logoutButton" class="logout-button">
+
+
+                <button
+                    id="logoutButton"
+                    class="logout-button"
+                >
                     Logout
                 </button>
 
+
             </div>
+
 
         </aside>
 
 
-        <!-- Main Content -->
 
-        <main class="main-content">
+        <!-- =========================
+             MAIN CONTENT
+        ========================== -->
+
+        <main class="main-content dashboard-page">
+
+
+            <!-- Header -->
 
             <header class="page-header">
 
                 <div>
-                    <h2>Dashboard</h2>
-                    <p>Overview of your support tickets</p>
+
+                    <h2>
+                        Dashboard
+                    </h2>
+
+                    <p>
+                        Overview of your support tickets
+                    </p>
+
                 </div>
 
             </header>
 
 
-            <!-- Dashboard Cards -->
+
+            <!-- =========================
+                 STATUS OVERVIEW
+            ========================== -->
 
             <section class="dashboard-grid">
+
 
                 <div class="dashboard-card">
 
@@ -86,11 +173,15 @@
                         Total Tickets
                     </div>
 
-                    <div id="totalTickets" class="card-value">
+                    <div
+                        id="totalTickets"
+                        class="card-value"
+                    >
                         -
                     </div>
 
                 </div>
+
 
 
                 <div class="dashboard-card">
@@ -99,11 +190,15 @@
                         Open
                     </div>
 
-                    <div id="openTickets" class="card-value">
+                    <div
+                        id="openTickets"
+                        class="card-value"
+                    >
                         -
                     </div>
 
                 </div>
+
 
 
                 <div class="dashboard-card">
@@ -112,11 +207,15 @@
                         In Progress
                     </div>
 
-                    <div id="inProgressTickets" class="card-value">
+                    <div
+                        id="inProgressTickets"
+                        class="card-value"
+                    >
                         -
                     </div>
 
                 </div>
+
 
 
                 <div class="dashboard-card">
@@ -125,11 +224,15 @@
                         Resolved
                     </div>
 
-                    <div id="resolvedTickets" class="card-value">
+                    <div
+                        id="resolvedTickets"
+                        class="card-value"
+                    >
                         -
                     </div>
 
                 </div>
+
 
 
                 <div class="dashboard-card">
@@ -138,23 +241,349 @@
                         Closed
                     </div>
 
-                    <div id="closedTickets" class="card-value">
+                    <div
+                        id="closedTickets"
+                        class="card-value"
+                    >
                         -
                     </div>
 
                 </div>
 
+
             </section>
 
 
-            <div id="dashboardMessage" class="dashboard-message"></div>
+
+            <!-- =========================
+                 CATEGORY + PRIORITY
+            ========================== -->
+
+            <section class="dashboard-two-column">
+
+
+                <!-- Category -->
+
+                <div class="dashboard-section-card">
+
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <h3>
+                                Tickets by Category
+                            </h3>
+
+                            <p>
+                                Current ticket distribution
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="dashboard-list category-list">
+
+
+                        <div class="dashboard-stat-row">
+
+                            <span>
+                                Technical
+                            </span>
+
+                            <strong id="technicalTickets">
+                                -
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="dashboard-stat-row">
+
+                            <span>
+                                Billing
+                            </span>
+
+                            <strong id="billingTickets">
+                                -
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="dashboard-stat-row">
+
+                            <span>
+                                Account
+                            </span>
+
+                            <strong id="accountTickets">
+                                -
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="dashboard-stat-row">
+
+                            <span>
+                                General
+                            </span>
+
+                            <strong id="generalTickets">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- Priority -->
+
+                <div class="dashboard-section-card">
+
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <h3>
+                                Tickets by Priority
+                            </h3>
+
+                            <p>
+                                Current priority distribution
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="dashboard-list priority-list">
+
+
+                        <div class="dashboard-stat-row">
+
+                            <span>
+                                High
+                            </span>
+
+                            <strong id="highPriorityTickets">
+                                -
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="dashboard-stat-row">
+
+                            <span>
+                                Medium
+                            </span>
+
+                            <strong id="mediumPriorityTickets">
+                                -
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="dashboard-stat-row">
+
+                            <span>
+                                Low
+                            </span>
+
+                            <strong id="lowPriorityTickets">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =========================
+                 LAST 7 DAYS
+            ========================== -->
+
+            <section class="dashboard-section-card">
+
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h3>
+                            Tickets Created in the Last 7 Days
+                        </h3>
+
+                        <p>
+                            Recent ticket activity
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div
+                    id="last7Days"
+                    class="last-seven-days"
+                >
+
+                    <div class="activity-empty">
+                        Loading activity...
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =========================
+                 LATEST TICKETS
+            ========================== -->
+
+            <section class="dashboard-section-card">
+
+
+                <div class="section-header">
+
+
+                    <div>
+
+                        <h3>
+                            Latest Tickets
+                        </h3>
+
+                        <p>
+                            Most recently created support tickets
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="tickets.html"
+                        class="view-all-link"
+                    >
+                        View all →
+                    </a>
+
+
+                </div>
+
+
+
+                <div class="latest-tickets-wrapper">
+
+
+                    <table class="latest-tickets-table">
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Reference
+                                </th>
+
+                                <th>
+                                    Customer
+                                </th>
+
+                                <th>
+                                    Subject
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Priority
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+
+                        <tbody id="latestTicketsBody">
+
+
+                            <tr>
+
+                                <td
+                                    colspan="5"
+                                    class="empty-state"
+                                >
+                                    Loading tickets...
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+
+                    </table>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- Error Message -->
+
+            <div
+                id="dashboardMessage"
+                class="dashboard-message"
+            ></div>
+
 
         </main>
 
+
     </div>
+
 
 
     <script src="js/dashboard.js"></script>
 
 </body>
+
 </html>

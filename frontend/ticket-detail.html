@@ -26,7 +26,7 @@
 
                 <div>
                     <h1>SmartDesk</h1>
-                    <p>Support Management</p>
+                    <span>Support Management</span>
                 </div>
 
             </div>
@@ -34,12 +34,21 @@
 
             <nav class="sidebar-nav">
 
-                <a href="dashboard.html" class="nav-link">
+                <a href="dashboard.html" class="nav-item">
+                    <span class="nav-dot"></span>
                     Dashboard
                 </a>
 
-                <a href="tickets.html" class="nav-link active">
+
+                <a href="tickets.html" class="nav-item">
+                    <span class="nav-dot"></span>
                     Tickets
+                </a>
+
+
+                <a href="#" class="nav-item active" id="ticketDetailNav">
+                    <span class="nav-dot"></span>
+                    Ticket Detail
                 </a>
 
             </nav>
@@ -59,6 +68,7 @@
                     </div>
 
                 </div>
+
 
                 <button id="logoutButton" class="logout-button">
                     Logout

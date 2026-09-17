@@ -34,6 +34,11 @@ const statusFilter = document.getElementById("statusFilter");
 const categoryFilter = document.getElementById("categoryFilter");
 const priorityFilter = document.getElementById("priorityFilter");
 
+const sortFilter = document.getElementById("sortFilter");
+const clearFiltersButton =
+    document.getElementById("clearFiltersButton");
+
+
 const ticketTableBody = document.getElementById("ticketTableBody");
 const ticketCount = document.getElementById("ticketCount");
 
@@ -119,6 +124,9 @@ async function loadTickets() {
                 priorityFilter.value
             );
         }
+        if (sortFilter.value) {
+            params.append("sort", sortFilter.value);
+        }
 
 
         const response = await fetch(
@@ -134,6 +142,17 @@ async function loadTickets() {
 
 
         const data = await response.json();
+        const ticketDetailNav =
+            document.getElementById("ticketDetailNav");
+
+        if (
+            ticketDetailNav &&
+            data.items &&
+            data.items.length > 0
+        ) {
+            ticketDetailNav.href =
+                `ticket-detail.html?id=${data.items[0].id}`;
+        }
 
 
         // Authentication error
@@ -198,8 +217,8 @@ async function loadTickets() {
 
                     <td>
                         <span class="ticket-status status-${ticket.status
-                            .toLowerCase()
-                            .replace(/\s+/g, "-")}">
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}">
                             ${ticket.status}
                         </span>
                     </td>
@@ -220,14 +239,11 @@ async function loadTickets() {
 
                 `;
 
-                ticketTableBody.appendChild(row);
-
                 row.addEventListener("click", function () {
+                    window.location.href = `ticket-detail.html?id=${ticket.id}`;
+                });
 
-                    window.location.href =
-                        `ticket-detail.html?id=${ticket.id}`;
-
-});
+                ticketTableBody.appendChild(row);
 
             });
         }
@@ -330,6 +346,23 @@ categoryFilter.addEventListener("change", function () {
 
 
 priorityFilter.addEventListener("change", function () {
+
+    currentPage = 1;
+
+    loadTickets();
+});
+sortFilter.addEventListener("change", function () {
+    currentPage = 1;
+    loadTickets();
+});
+
+clearFiltersButton.addEventListener("click", function () {
+
+    searchInput.value = "";
+    statusFilter.value = "";
+    categoryFilter.value = "";
+    priorityFilter.value = "";
+    sortFilter.value = "newest";
 
     currentPage = 1;
 

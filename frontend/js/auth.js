@@ -51,6 +51,8 @@ loginForm.addEventListener("submit", async function (event) {
 
         console.log("Logged in user:", data.user);
 
+        window.location.href = "dashboard.html";
+
         // Dashboard will be created in the next step.
         // For now, stay on the login page.
 

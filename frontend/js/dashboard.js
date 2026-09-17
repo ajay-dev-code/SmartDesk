@@ -4,24 +4,37 @@ const token = localStorage.getItem("access_token");
 const userData = localStorage.getItem("user");
 
 
-// Check authentication
+// =========================================
+// Authentication
+// =========================================
+
 if (!token) {
     window.location.href = "login.html";
 }
 
 
-// Display admin name
+// =========================================
+// Display Admin
+// =========================================
+
 if (userData) {
+
     const user = JSON.parse(userData);
 
-    document.getElementById("adminName").textContent = user.name;
+    document.getElementById("adminName").textContent =
+        user.name;
+
 }
 
 
-// Get dashboard data
+// =========================================
+// Load Dashboard
+// =========================================
+
 async function loadDashboard() {
 
-    const message = document.getElementById("dashboardMessage");
+    const message =
+        document.getElementById("dashboardMessage");
 
     try {
 
@@ -36,62 +49,377 @@ async function loadDashboard() {
             }
         );
 
+
         const data = await response.json();
+
+
+        // =========================================
+        // Authentication Error
+        // =========================================
 
         if (!response.ok) {
 
-            if (response.status === 401 || response.status === 403) {
+            if (
+                response.status === 401 ||
+                response.status === 403
+            ) {
+
                 localStorage.removeItem("access_token");
                 localStorage.removeItem("user");
 
-                window.location.href = "login.html";
+                window.location.href =
+                    "login.html";
+
                 return;
+
             }
 
-            throw new Error(data.detail || "Failed to load dashboard.");
+
+            throw new Error(
+                data.detail ||
+                "Failed to load dashboard."
+            );
+
         }
 
 
-        // Display real ticket counts
+        // =========================================
+        // Ticket Detail Navigation
+        // =========================================
 
-        document.getElementById("totalTickets").textContent =
+        const ticketDetailNav =
+            document.getElementById("ticketDetailNav");
+
+
+        if (ticketDetailNav) {
+
+            if (
+                data.latest_tickets &&
+                data.latest_tickets.length > 0
+            ) {
+
+                ticketDetailNav.href =
+                    `ticket-detail.html?id=${data.latest_tickets[0].id}`;
+
+            } else {
+
+                ticketDetailNav.href =
+                    "tickets.html";
+
+            }
+
+        }
+
+
+        // =========================================
+        // Status
+        // =========================================
+
+        document.getElementById(
+            "totalTickets"
+        ).textContent =
             data.total_tickets;
 
-        document.getElementById("openTickets").textContent =
+
+        document.getElementById(
+            "openTickets"
+        ).textContent =
             data.open_tickets;
 
-        document.getElementById("inProgressTickets").textContent =
+
+        document.getElementById(
+            "inProgressTickets"
+        ).textContent =
             data.in_progress_tickets;
 
-        document.getElementById("resolvedTickets").textContent =
+
+        document.getElementById(
+            "resolvedTickets"
+        ).textContent =
             data.resolved_tickets;
 
-        document.getElementById("closedTickets").textContent =
+
+        document.getElementById(
+            "closedTickets"
+        ).textContent =
             data.closed_tickets;
+
+
+
+        // =========================================
+        // Category
+        // =========================================
+
+        document.getElementById(
+            "technicalTickets"
+        ).textContent =
+            data.category_counts.Technical || 0;
+
+
+        document.getElementById(
+            "billingTickets"
+        ).textContent =
+            data.category_counts.Billing || 0;
+
+
+        document.getElementById(
+            "accountTickets"
+        ).textContent =
+            data.category_counts.Account || 0;
+
+
+        document.getElementById(
+            "generalTickets"
+        ).textContent =
+            data.category_counts.General || 0;
+
+
+
+        // =========================================
+        // Priority
+        // =========================================
+
+        document.getElementById(
+            "highPriorityTickets"
+        ).textContent =
+            data.priority_counts.High || 0;
+
+
+        document.getElementById(
+            "mediumPriorityTickets"
+        ).textContent =
+            data.priority_counts.Medium || 0;
+
+
+        document.getElementById(
+            "lowPriorityTickets"
+        ).textContent =
+            data.priority_counts.Low || 0;
+
+
+
+        // =========================================
+        // Last 7 Days
+        // =========================================
+
+        const last7Days =
+            document.getElementById("last7Days");
+
+
+        last7Days.innerHTML = "";
+
+
+        data.last_7_days.forEach(day => {
+
+            const dayElement =
+                document.createElement("div");
+
+
+            dayElement.className =
+                "activity-day";
+
+
+            dayElement.innerHTML = `
+
+                <span>
+                    ${formatActivityDate(day.date)}
+                </span>
+
+                <strong>
+                    ${day.count}
+                </strong>
+
+            `;
+
+
+            last7Days.appendChild(
+                dayElement
+            );
+
+        });
+
+
+
+        // =========================================
+        // Latest Tickets
+        // =========================================
+
+        const latestTicketsBody =
+            document.getElementById(
+                "latestTicketsBody"
+            );
+
+
+        latestTicketsBody.innerHTML = "";
+
+
+        if (
+            data.latest_tickets &&
+            data.latest_tickets.length > 0
+        ) {
+
+
+            data.latest_tickets.forEach(ticket => {
+
+                const row =
+                    document.createElement("tr");
+
+
+                row.classList.add(
+                    "dashboard-ticket-row"
+                );
+
+
+                row.innerHTML = `
+
+                    <td>
+                        <strong>
+                            ${ticket.reference_number}
+                        </strong>
+                    </td>
+
+                    <td>
+                        ${ticket.customer_name}
+                    </td>
+
+                    <td>
+                        ${ticket.subject}
+                    </td>
+
+                    <td>
+
+                        <span class="ticket-status status-${ticket.status
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}">
+
+                            ${ticket.status}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <span class="ticket-priority priority-${ticket.priority.toLowerCase()}">
+
+                            ${ticket.priority}
+
+                        </span>
+
+                    </td>
+
+                `;
+
+
+                // Open selected ticket
+                row.addEventListener(
+                    "click",
+                    function () {
+
+                        window.location.href =
+                            `ticket-detail.html?id=${ticket.id}`;
+
+                    }
+                );
+
+
+                latestTicketsBody.appendChild(
+                    row
+                );
+
+            });
+
+
+        } else {
+
+            latestTicketsBody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty-state"
+                    >
+                        No tickets found.
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
 
 
     } catch (error) {
 
-        console.error("Dashboard error:", error);
+        console.error(
+            "Dashboard error:",
+            error
+        );
 
-        message.textContent = error.message;
-        message.style.color = "#dc2626";
+
+        message.textContent =
+            error.message;
+
+
+        message.style.color =
+            "#dc2626";
+
     }
+
 }
 
 
+// =========================================
+// Date Formatting
+// =========================================
+
+function formatActivityDate(dateString) {
+
+    const date =
+        new Date(dateString);
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short"
+        }
+    );
+
+}
+
+
+// =========================================
 // Logout
-document.getElementById("logoutButton").addEventListener(
+// =========================================
+
+document.getElementById(
+    "logoutButton"
+).addEventListener(
     "click",
     function () {
 
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("user");
+        localStorage.removeItem(
+            "access_token"
+        );
 
-        window.location.href = "login.html";
+
+        localStorage.removeItem(
+            "user"
+        );
+
+
+        window.location.href =
+            "login.html";
+
     }
 );
 
 
-// Load dashboard
+// =========================================
+// Load
+// =========================================
+
 loadDashboard();

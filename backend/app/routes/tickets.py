@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
@@ -165,7 +167,6 @@ def get_all_tickets(
 # --------------------------------------------------
 # ADMIN DASHBOARD
 # --------------------------------------------------
-
 @router.get(
     "/dashboard",
     response_model=DashboardResponse
@@ -174,6 +175,10 @@ def get_dashboard(
     db: Session = Depends(get_db),
     current_admin=Depends(get_current_admin)
 ):
+    # =========================
+    # Status Counts
+    # =========================
+
     total_tickets = db.query(Ticket).count()
 
     open_tickets = (
@@ -200,12 +205,121 @@ def get_dashboard(
         .count()
     )
 
+
+    # =========================
+    # Category Counts
+    # =========================
+
+    category_counts = {
+        "Technical": (
+            db.query(Ticket)
+            .filter(Ticket.category == "Technical")
+            .count()
+        ),
+        "Billing": (
+            db.query(Ticket)
+            .filter(Ticket.category == "Billing")
+            .count()
+        ),
+        "Account": (
+            db.query(Ticket)
+            .filter(Ticket.category == "Account")
+            .count()
+        ),
+        "General": (
+            db.query(Ticket)
+            .filter(Ticket.category == "General")
+            .count()
+        )
+    }
+
+
+    # =========================
+    # Priority Counts
+    # =========================
+
+    priority_counts = {
+        "High": (
+            db.query(Ticket)
+            .filter(Ticket.priority == "High")
+            .count()
+        ),
+        "Medium": (
+            db.query(Ticket)
+            .filter(Ticket.priority == "Medium")
+            .count()
+        ),
+        "Low": (
+            db.query(Ticket)
+            .filter(Ticket.priority == "Low")
+            .count()
+        )
+    }
+
+
+    # =========================
+    # Last 7 Days
+    # =========================
+
+    today = datetime.now().date()
+    start_date = today - timedelta(days=6)
+
+    recent_tickets = (
+        db.query(Ticket)
+        .filter(Ticket.created_at >= start_date)
+        .order_by(Ticket.created_at.asc())
+        .all()
+    )
+
+    last_7_days = []
+
+    for i in range(7):
+
+        current_date = start_date + timedelta(days=i)
+
+        count = 0
+
+        for ticket in recent_tickets:
+
+            if ticket.created_at.date() == current_date:
+                count += 1
+
+        last_7_days.append({
+            "date": current_date.isoformat(),
+            "count": count
+        })
+
+
+    # =========================
+    # Latest Tickets
+    # =========================
+
+    latest_tickets = (
+        db.query(Ticket)
+        .order_by(Ticket.created_at.desc())
+        .limit(5)
+        .all()
+    )
+
+
+    # =========================
+    # Response
+    # =========================
+
     return {
         "total_tickets": total_tickets,
         "open_tickets": open_tickets,
         "in_progress_tickets": in_progress_tickets,
         "resolved_tickets": resolved_tickets,
-        "closed_tickets": closed_tickets
+        "closed_tickets": closed_tickets,
+
+        "category_counts": category_counts,
+
+        "priority_counts": priority_counts,
+
+        "last_7_days": last_7_days,
+
+        "latest_tickets": latest_tickets
     }
 # --------------------------------------------------
 # GET TICKET DETAIL

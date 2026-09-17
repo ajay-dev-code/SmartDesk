@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,13 +32,18 @@
             <nav class="sidebar-nav">
 
                 <a href="dashboard.html" class="nav-item">
-                    <span>▦</span>
+                    <span class="nav-dot"></span>
                     Dashboard
                 </a>
 
                 <a href="tickets.html" class="nav-item active">
-                    <span>▤</span>
+                    <span class="nav-dot"></span>
                     Tickets
+                </a>
+
+                <a href="#" class="nav-item" id="ticketDetailNav">
+                    <span class="nav-dot"></span>
+                    Ticket Detail
                 </a>
 
             </nav>
@@ -77,18 +83,13 @@
 
             </header>
 
-
             <!-- Search and Filters -->
 
             <section class="ticket-toolbar">
 
                 <div class="search-box">
 
-                    <input
-                        type="text"
-                        id="searchInput"
-                        placeholder="Search by reference, subject or email..."
-                    >
+                    <input type="text" id="searchInput" placeholder="Search by reference, subject or email...">
 
                 </div>
 
@@ -126,10 +127,26 @@
 
                     </select>
 
+
+                    <!-- Sort -->
+
+                    <select id="sortFilter">
+
+                        <option value="newest">Newest first</option>
+                        <option value="oldest">Oldest first</option>
+
+                    </select>
+
+
+                    <!-- Clear Filters -->
+
+                    <button type="button" id="clearFiltersButton" class="clear-filter-button">
+                        Clear filters
+                    </button>
+
                 </div>
 
             </section>
-
 
             <!-- Ticket Table -->
 
@@ -209,4 +226,5 @@
     <script src="js/tickets.js"></script>
 
 </body>
+
 </html>
