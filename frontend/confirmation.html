@@ -17,6 +17,265 @@
         href="css/style.css"
     >
 
+
+    <!-- =========================
+         Confirmation Styles
+         Scoped to this page only
+    ========================== -->
+
+    <style>
+
+        .cf-page {
+            background: #f4f5f7;
+            min-height: calc(100vh - 70px);
+            padding: 40px 20px 60px;
+        }
+
+        .cf-shell {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .cf-card {
+            background: #ffffff;
+            border: 1px solid #e7e8ec;
+            border-radius: 14px;
+            padding: 34px 32px;
+            margin-bottom: 18px;
+        }
+
+
+        /* Success */
+
+        .cf-card-center {
+            text-align: center;
+            padding-bottom: 16px;
+        }
+
+        .cf-check {
+            width: 62px;
+            height: 62px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            background: #e2f4e8;
+            color: #1f8a4c;
+            font-size: 28px;
+            line-height: 62px;
+        }
+
+        .cf-title {
+            font-size: 30px;
+            font-weight: 700;
+            color: #101114;
+            margin-bottom: 10px;
+        }
+
+        .cf-sub {
+            font-size: 15px;
+            color: #6b7280;
+            margin-bottom: 26px;
+        }
+
+
+        /* Reference */
+
+        .cf-ref {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border: 1px dashed #d4d6dc;
+            border-radius: 10px;
+        }
+
+        .cf-ref strong {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 27px;
+            font-weight: 700;
+            color: #101114;
+            letter-spacing: 0.5px;
+        }
+
+        .cf-copy {
+            background: #ffffff;
+            border: 1px solid #dcdee3;
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-size: 14px;
+            color: #3f4246;
+            cursor: pointer;
+        }
+
+        .cf-copy:hover {
+            background: #f6f7f8;
+        }
+
+        .cf-copymsg {
+            display: block;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #1f8a4c;
+            min-height: 16px;
+        }
+
+
+        /* AI triage */
+
+        .cf-aihead {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .cf-aihead h2 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #101114;
+        }
+
+        .cf-time {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 13px;
+            color: #9aa0a6;
+        }
+
+        .cf-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .cf-chip {
+            padding: 10px 17px;
+            border-radius: 999px;
+            font-size: 14.5px;
+            background: #f1f2f4;
+            color: #3f4246;
+        }
+
+        .cf-chip b {
+            font-weight: 600;
+        }
+
+        .cf-chip-amber {
+            background: #fdf0dc;
+            color: #a5620c;
+        }
+
+        .cf-chip-blue {
+            background: #e7effc;
+            color: #1f5fbf;
+        }
+
+        .cf-chip-green {
+            background: #e2f4e8;
+            color: #1f7a45;
+        }
+
+        .cf-chip-red {
+            background: #fdeaea;
+            color: #b3261e;
+        }
+
+        .cf-summary {
+            background: #f6f7f8;
+            border-radius: 10px;
+            padding: 18px 20px;
+            font-size: 15px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .cf-summary b {
+            font-weight: 700;
+            color: #101114;
+        }
+
+        .cf-note {
+            margin-top: 16px;
+            font-size: 14px;
+            color: #9aa0a6;
+        }
+
+
+        /* Actions */
+
+        .cf-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 26px;
+        }
+
+        .cf-btn {
+            display: inline-block;
+            padding: 15px 28px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .cf-btn-primary {
+            background: #3f5fd7;
+            color: #ffffff;
+        }
+
+        .cf-btn-primary:hover {
+            background: #354fbd;
+        }
+
+        .cf-btn-ghost {
+            background: #ffffff;
+            border: 1px solid #dcdee3;
+            color: #24262a;
+        }
+
+        .cf-btn-ghost:hover {
+            background: #f6f7f8;
+        }
+
+
+        @media (max-width: 560px) {
+
+            .cf-card {
+                padding: 26px 20px;
+            }
+
+            .cf-title {
+                font-size: 24px;
+            }
+
+            .cf-ref {
+                gap: 10px;
+                padding: 12px 14px;
+            }
+
+            .cf-ref strong {
+                font-size: 22px;
+            }
+
+            .cf-aihead {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+
+            .cf-actions {
+                flex-direction: column;
+            }
+
+            .cf-btn {
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 
@@ -65,40 +324,30 @@
          Confirmation
     ========================== -->
 
-    <main class="confirmation-page">
+    <main class="cf-page">
 
-        <section class="confirmation-card">
+        <div class="cf-shell">
 
 
             <!-- =========================
                  Success
             ========================== -->
 
-            <div class="confirmation-success">
+            <section class="cf-card cf-card-center">
 
-                <div class="success-icon">
+                <div class="cf-check">
                     ✓
                 </div>
 
-                <h1>
+                <h1 class="cf-title">
                     Ticket received
                 </h1>
 
-                <p>
+                <p class="cf-sub">
                     Keep this reference number for future communication.
                 </p>
 
-            </div>
-
-
-
-            <!-- =========================
-                 Ticket Reference
-            ========================== -->
-
-            <div class="ticket-reference-section">
-
-                <div class="ticket-reference-row">
+                <div class="cf-ref">
 
                     <strong id="referenceNumber">
                         -
@@ -107,6 +356,7 @@
                     <button
                         type="button"
                         id="copyReferenceButton"
+                        class="cf-copy"
                     >
                         Copy
                     </button>
@@ -115,10 +365,10 @@
 
                 <span
                     id="copyMessage"
-                    class="copy-message"
+                    class="cf-copymsg"
                 ></span>
 
-            </div>
+            </section>
 
 
 
@@ -126,93 +376,68 @@
                  AI Triage
             ========================== -->
 
-            <section class="ai-result-section">
+            <section class="cf-card">
 
-
-                <div class="ai-result-header">
+                <div class="cf-aihead">
 
                     <h2>
                         AI triage result
                     </h2>
 
-                    <span id="aiResponseTime">
-                        AI classification completed
-                    </span>
+                    <span
+                        id="aiResponseTime"
+                        class="cf-time"
+                    ></span>
 
                 </div>
-
 
 
                 <!-- Classification -->
 
-                <div class="ai-result-list">
+                <div class="cf-chips">
 
+                    <span
+                        id="categoryChip"
+                        class="cf-chip"
+                    >
+                        Category ·
+                        <b id="confirmationCategory">-</b>
+                    </span>
 
-                    <div class="ai-result-row">
+                    <span
+                        id="priorityChip"
+                        class="cf-chip"
+                    >
+                        Priority ·
+                        <b id="confirmationPriority">-</b>
+                    </span>
 
-                        <span>
-                            Category
-                        </span>
-
-                        <strong id="confirmationCategory">
-                            -
-                        </strong>
-
-                    </div>
-
-
-                    <div class="ai-result-row">
-
-                        <span>
-                            Priority
-                        </span>
-
-                        <strong id="confirmationPriority">
-                            -
-                        </strong>
-
-                    </div>
-
-
-                    <div class="ai-result-row">
-
-                        <span>
-                            Status
-                        </span>
-
-                        <strong id="confirmationStatus">
-                            -
-                        </strong>
-
-                    </div>
-
+                    <span
+                        id="statusChip"
+                        class="cf-chip"
+                    >
+                        Status ·
+                        <b id="confirmationStatus">-</b>
+                    </span>
 
                 </div>
-
 
 
                 <!-- Summary -->
 
-                <div class="ai-summary-row">
+                <div class="cf-summary">
 
-                    <span>
-                        Summary
-                    </span>
-
-                    <p id="confirmationSummary">
-                        -
-                    </p>
+                    <b>Summary</b> ·
+                    <span id="confirmationSummary">-</span>
 
                 </div>
 
 
-
                 <!-- Review Note -->
 
-                <p class="ai-review-note">
+                <p class="cf-note">
                     An agent reviews every AI suggestion and may correct it.
                 </p>
-
 
             </section>
 
@@ -222,11 +447,11 @@
                  Actions
             ========================== -->
 
-            <div class="confirmation-actions">
+            <div class="cf-actions">
 
                 <a
                     href="index.html"
-                    class="submit-ticket-button"
+                    class="cf-btn cf-btn-primary"
                 >
                     Raise another ticket
                 </a>
@@ -234,7 +459,7 @@
 
                 <a
                     href="login.html"
-                    class="open-admin-button"
+                    class="cf-btn cf-btn-ghost"
                 >
                     Open admin panel
                 </a>
@@ -242,7 +467,7 @@
             </div>
 
 
-        </section>
+        </div>
 
     </main>
 
@@ -253,6 +478,37 @@
     ========================== -->
 
     <script>
+
+        // ========================================
+        // Chip Colours
+        // ========================================
+
+        const priorityColours = {
+            "High": "cf-chip-red",
+            "Medium": "cf-chip-amber",
+            "Low": "cf-chip-green"
+        };
+
+        const statusColours = {
+            "Open": "cf-chip-blue",
+            "In Progress": "cf-chip-amber",
+            "Resolved": "cf-chip-green",
+            "Closed": "cf-chip"
+        };
+
+
+        function paintChip(chipId, colourClass) {
+
+            if (!colourClass || colourClass === "cf-chip") {
+                return;
+            }
+
+            document.getElementById(chipId)
+                .classList.add(colourClass);
+
+        }
+
+
 
         // ========================================
         // Read Saved Ticket
@@ -288,18 +544,32 @@
 
                 // Priority
 
+                const priority =
+                    ticket.priority || "Medium";
+
                 document.getElementById(
                     "confirmationPriority"
-                ).textContent =
-                    ticket.priority || "Medium";
+                ).textContent = priority;
+
+                paintChip(
+                    "priorityChip",
+                    priorityColours[priority]
+                );
 
 
                 // Status
 
+                const ticketStatus =
+                    ticket.status || "Open";
+
                 document.getElementById(
                     "confirmationStatus"
-                ).textContent =
-                    ticket.status || "Open";
+                ).textContent = ticketStatus;
+
+                paintChip(
+                    "statusChip",
+                    statusColours[ticketStatus]
+                );
 
 
                 // AI Summary
@@ -309,6 +579,20 @@
                 ).textContent =
                     ticket.ai_summary ||
                     "AI summary unavailable.";
+
+
+                // Response Time
+
+                if (ticket.elapsed_ms) {
+
+                    document.getElementById(
+                        "aiResponseTime"
+                    ).textContent =
+                        "responded in " +
+                        (ticket.elapsed_ms / 1000).toFixed(1) +
+                        " s";
+
+                }
 
             }
 
@@ -347,7 +631,7 @@
                 const reference =
                     document.getElementById(
                         "referenceNumber"
-                    ).textContent;
+                    ).textContent.trim();
 
 
                 if (!reference || reference === "-") {
