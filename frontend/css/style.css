@@ -785,6 +785,41 @@ tbody tr:hover {
 }
 
 
+/* Mobile: stack the sidebar above the content.
+   This mirrors the .app-layout rules used by the dashboard and
+   ticket list at the same 560px breakpoint. The selectors need
+   two classes, because ".admin-layout .sidebar" above outranks
+   the plain ".sidebar" mobile rule and would otherwise keep the
+   sidebar pinned at 250px, squeezing .admin-main to 140px. */
+
+@media (max-width: 560px) {
+
+    .admin-layout {
+        display: block;
+    }
+
+    .admin-layout .sidebar {
+        width: 100%;
+        min-width: 0;
+        min-height: auto;
+    }
+
+    .admin-layout .sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .admin-layout .sidebar-bottom {
+        margin-top: 20px;
+    }
+
+    .admin-main {
+        padding: 20px 16px;
+    }
+
+}
+
+
 /* =========================
    Sidebar - Ticket Detail
 ========================= */
