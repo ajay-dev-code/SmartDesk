@@ -779,10 +779,17 @@ Alternatively, open `database/schema.sql` in MySQL Workbench and execute it.
 
 From the `backend` directory:
 
+#### Windows
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+
+### macOS and Linux
 ```bash
 python3.12 -m venv venv
-source venv/bin/activate      # macOS and Linux
-venv\Scripts\activate         # Windows
+source venv/bin/activate      
 
 pip install -r requirements.txt
 ```
@@ -817,58 +824,31 @@ Check that it started correctly:
 
 ### 7. Run the Frontend
 
-In a second terminal, serve the `frontend` directory over HTTP:
+The frontend is built using HTML, CSS, and JavaScript.
 
-```bash
-cd frontend
-python3 -m http.server 5500
-```
+No separate frontend server is required.
 
-Then open:
+Make sure the FastAPI backend is running at:
 
-- Public ticket form: `http://127.0.0.1:5500/index.html`
-- Admin login: `http://127.0.0.1:5500/login.html`
+`http://127.0.0.1:8000`
 
-Log in with the `ADMIN_EMAIL` and `ADMIN_PASSWORD` values from `.env`.
+Then open the following file directly in a web browser:
 
-Serve the pages over HTTP rather than opening the HTML files directly from
-disk. A `file://` page sends `Origin: null`, and because the API enables
-`allow_credentials`, it echoes back `Access-Control-Allow-Origin: null` rather
-than `*`. Browser handling of that varies, so a local HTTP server is the
-dependable option.
+`frontend/index.html`
 
-## Troubleshooting
+### Public Customer Flow
 
-### `ERROR 1045 Access denied` when creating the database
+`index.html` → Submit Ticket → `confirmation.html`
 
-The input was redirected with `<`, so the client read the password from the SQL
-file. Use the `source` command inside the MySQL prompt instead. See step 3.
+### Admin Flow
 
-### `test-db` fails with `Unknown database 'smartdesk_db'`
+Open:
 
-The schema was never applied. Run step 3, then restart the backend.
+`frontend/login.html`
 
-### Login always returns `Invalid email or password`
+Then log in using the `ADMIN_EMAIL` and `ADMIN_PASSWORD`
+configured in `backend/.env`.
 
-The admin row does not exist yet, or `.env` was edited after seeding. Run
-`python seed_admin.py` and confirm the email matches `ADMIN_EMAIL`.
+After login:
 
-### Tickets are created but always show `General` / `Medium` with no summary
-
-The Gemini call failed and the service fell back to defaults, which is the
-intended behaviour in `app/services/ai_service.py`. Check `GEMINI_API_KEY` in
-`.env`. Ticket creation itself is unaffected.
-
-### `python -m venv` fails with `ensurepip ... returned non-zero exit status 1`
-
-On some macOS setups, Homebrew's Python links `pyexpat` against the system
-`libexpat`, which breaks `ensurepip`. The error mentions
-`Symbol not found: _XML_SetAllocTrackerActivationThreshold`. Reinstall Python
-with `brew reinstall python@3.12`, or create the environment with `uv`, which
-does not use `ensurepip`:
-
-```bash
-uv venv --python 3.12 venv
-source venv/bin/activate
-uv pip install -r requirements.txt
-```
+`login.html` → `dashboard.html` → `tickets.html` → `ticket-detail.html`
