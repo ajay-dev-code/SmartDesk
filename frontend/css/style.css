@@ -2934,33 +2934,19 @@ Public Footer
     gap: 8px;
 }
 
+/* The bar height is set inline by dashboard.js, scaled against
+   the busiest day. Do not add a height or min-height here, and
+   do not reintroduce nth-child heights: those ignore the data
+   and render an identical chart whatever the counts are. */
+
 .activity-day strong {
     order: 1;
     width: 100%;
-    min-height: 18px;
+    min-height: 0;
     border-radius: 5px 5px 0 0;
     background: #b7cdf0;
     color: transparent;
     font-size: 0;
-}
-
-.activity-day:nth-child(1) strong,
-.activity-day:nth-child(2) strong,
-.activity-day:nth-child(3) strong,
-.activity-day:nth-child(4) strong {
-    height: 18px;
-}
-
-.activity-day:nth-child(5) strong {
-    height: 35px;
-}
-
-.activity-day:nth-child(6) strong {
-    height: 50px;
-}
-
-.activity-day:nth-child(7) strong {
-    height: 35px;
 }
 
 .activity-day span {

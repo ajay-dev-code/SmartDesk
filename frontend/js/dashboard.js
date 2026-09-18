@@ -209,6 +209,16 @@ async function loadDashboard() {
         last7Days.innerHTML = "";
 
 
+        // Scale every bar against the busiest day so the
+        // heights actually reflect the counts. Fall back to 1
+        // when every day is empty, to avoid dividing by zero.
+
+        const busiestDay = Math.max(
+            1,
+            ...data.last_7_days.map(day => day.count)
+        );
+
+
         data.last_7_days.forEach(day => {
 
             const dayElement =
@@ -219,13 +229,31 @@ async function loadDashboard() {
                 "activity-day";
 
 
+            // A day with no tickets keeps a small stub so the
+            // column still reads as present but clearly empty.
+
+            const barHeight =
+                day.count === 0
+                    ? 4
+                    : Math.max(
+                        10,
+                        Math.round(
+                            (day.count / busiestDay) * 72
+                        )
+                    );
+
+
+            dayElement.title =
+                `${day.count} ticket${day.count === 1 ? "" : "s"}`;
+
+
             dayElement.innerHTML = `
 
                 <span>
                     ${formatActivityDate(day.date)}
                 </span>
 
-                <strong>
+                <strong style="height: ${barHeight}px">
                     ${day.count}
                 </strong>
 
