@@ -3580,12 +3580,32 @@ Public Footer
 }
 
 
+/* Category and Priority badges
+   These sit inside .ai-detail-item, not .ai-result-badges,
+   so they need their own pill geometry. The ID selector also
+   outranks the later "display: block" rule on
+   ".ai-detail-item strong". */
+
+#ticketCategory,
+#ticketPriority {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 13px;
+
+    line-height: 1;
+}
+
+
 /* Category */
 
 #ticketCategory {
-    background: #eef0f2;
-
-    color: #334155;
+    background: #eff4ff;
 }
 
 
@@ -3593,17 +3613,16 @@ Public Footer
 
 #ticketPriority {
     background: #fff1df;
-
-    color: #b45309;
 }
 
 
-/* Status */
+/* Status
+   The badge itself is injected by ticket-detail.js as an inner
+   .ticket-status span, so this element is only a wrapper and must
+   not paint a second background behind it. */
 
 #ticketStatus {
-    background: #e7efff;
-
-    color: #315ea8;
+    background: transparent;
 }
 
 .ai-summary {
