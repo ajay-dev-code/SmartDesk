@@ -9,7 +9,9 @@ const userData = localStorage.getItem("user");
 // =========================
 
 if (!token) {
+
     window.location.href = "login.html";
+
 }
 
 
@@ -21,7 +23,9 @@ if (userData) {
 
     const user = JSON.parse(userData);
 
-    document.getElementById("adminName").textContent = user.name;
+    document.getElementById("adminName").textContent =
+        user.name;
+
 }
 
 
@@ -29,11 +33,38 @@ if (userData) {
 // Get Ticket ID
 // =========================
 
-const urlParams = new URLSearchParams(window.location.search);
+const urlParams =
+    new URLSearchParams(window.location.search);
 
-const ticketId = urlParams.get("id");
+const ticketId =
+    urlParams.get("id");
 
-const message = document.getElementById("ticketMessage");
+
+// =========================
+// Messages
+// =========================
+
+const message =
+    document.getElementById("ticketMessage");
+
+const classificationMessage =
+    document.getElementById("classificationMessage");
+
+
+// =========================
+// Classification Elements
+// =========================
+
+const categorySelect =
+    document.getElementById("categorySelect");
+
+const prioritySelect =
+    document.getElementById("prioritySelect");
+
+const saveClassificationButton =
+    document.getElementById(
+        "saveClassificationButton"
+    );
 
 
 // =========================
@@ -42,8 +73,11 @@ const message = document.getElementById("ticketMessage");
 
 if (!ticketId) {
 
-    message.textContent = "Ticket ID is missing.";
-    message.style.color = "#dc2626";
+    message.textContent =
+        "Ticket ID is missing.";
+
+    message.style.color =
+        "#dc2626";
 
 } else {
 
@@ -72,19 +106,29 @@ async function loadTicketDetails() {
         );
 
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
 
         // =========================
         // Authentication Error
         // =========================
 
-        if (response.status === 401 || response.status === 403) {
+        if (
+            response.status === 401 ||
+            response.status === 403
+        ) {
 
-            localStorage.removeItem("access_token");
-            localStorage.removeItem("user");
+            localStorage.removeItem(
+                "access_token"
+            );
 
-            window.location.href = "login.html";
+            localStorage.removeItem(
+                "user"
+            );
+
+            window.location.href =
+                "login.html";
 
             return;
         }
@@ -97,8 +141,10 @@ async function loadTicketDetails() {
         if (!response.ok) {
 
             throw new Error(
-                data.detail || "Failed to load ticket."
+                data.detail ||
+                "Failed to load ticket."
             );
+
         }
 
 
@@ -106,32 +152,79 @@ async function loadTicketDetails() {
         // Display Ticket
         // =========================
 
-        document.getElementById("ticketReference").textContent =
+        document.getElementById(
+            "ticketReference"
+        ).textContent =
             data.reference_number;
 
-        document.getElementById("customerName").textContent =
+
+        document.getElementById(
+            "customerName"
+        ).textContent =
             data.customer_name;
 
-        document.getElementById("customerEmail").textContent =
+
+        document.getElementById(
+            "customerEmail"
+        ).textContent =
             data.customer_email;
 
-        document.getElementById("ticketSubject").textContent =
+
+        document.getElementById(
+            "ticketSubject"
+        ).textContent =
             data.subject;
 
-        document.getElementById("ticketDescription").textContent =
+
+        document.getElementById(
+            "ticketDescription"
+        ).textContent =
             data.description;
 
-        document.getElementById("ticketCategory").textContent =
+
+        document.getElementById(
+            "ticketCategory"
+        ).textContent =
             data.category;
 
-        document.getElementById("ticketPriority").textContent =
+
+        document.getElementById(
+            "ticketPriority"
+        ).textContent =
             data.priority;
 
-        document.getElementById("aiSummary").textContent =
-            data.ai_summary || "No AI summary available.";
 
-        document.getElementById("createdDate").textContent =
+        document.getElementById(
+            "aiSummary"
+        ).textContent =
+            data.ai_summary ||
+            "No AI summary available.";
+
+
+        document.getElementById(
+            "createdDate"
+        ).textContent =
             formatDate(data.created_at);
+
+
+        // =========================
+        // Set Classification Values
+        // =========================
+
+        if (categorySelect) {
+
+            categorySelect.value =
+                data.category;
+
+        }
+
+
+        if (prioritySelect) {
+
+            prioritySelect.value =
+                data.priority;
+
+        }
 
 
         // =========================
@@ -139,7 +232,10 @@ async function loadTicketDetails() {
         // =========================
 
         const statusElement =
-            document.getElementById("ticketStatus");
+            document.getElementById(
+                "ticketStatus"
+            );
+
 
         statusElement.innerHTML = `
             <span class="ticket-status status-${data.status
@@ -154,16 +250,231 @@ async function loadTicketDetails() {
         // Status History
         // =========================
 
-        displayStatusHistory(data.status_history);
+        displayStatusHistory(
+            data.status_history
+        );
+
+
+        // =========================
+        // Set Status Dropdown
+        // =========================
+
+        const statusSelect =
+            document.getElementById(
+                "statusSelect"
+            );
+
+
+        if (statusSelect) {
+
+            statusSelect.value =
+                data.status;
+
+        }
 
 
     } catch (error) {
 
-        console.error("Ticket detail error:", error);
+        console.error(
+            "Ticket detail error:",
+            error
+        );
 
-        message.textContent = error.message;
-        message.style.color = "#dc2626";
+
+        message.textContent =
+            error.message;
+
+        message.style.color =
+            "#dc2626";
+
     }
+
+}
+
+
+// =========================
+// Update Classification
+// =========================
+
+if (saveClassificationButton) {
+
+    saveClassificationButton.addEventListener(
+        "click",
+        async function () {
+
+
+            const category =
+                categorySelect.value;
+
+
+            const priority =
+                prioritySelect.value;
+
+
+            // =========================
+            // Clear Previous Message
+            // =========================
+
+            classificationMessage.textContent =
+                "";
+
+
+            classificationMessage.style.color =
+                "";
+
+
+            // =========================
+            // Disable Button
+            // =========================
+
+            saveClassificationButton.disabled =
+                true;
+
+
+            saveClassificationButton.textContent =
+                "Saving...";
+
+
+            try {
+
+                const response = await fetch(
+                    `${API_BASE_URL}/api/tickets/${ticketId}/classification`,
+                    {
+                        method: "PATCH",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                `Bearer ${token}`
+                        },
+
+                        body: JSON.stringify({
+
+                            category:
+                                category,
+
+                            priority:
+                                priority
+
+                        })
+                    }
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                // =========================
+                // Authentication Error
+                // =========================
+
+                if (
+                    response.status === 401 ||
+                    response.status === 403
+                ) {
+
+                    localStorage.removeItem(
+                        "access_token"
+                    );
+
+                    localStorage.removeItem(
+                        "user"
+                    );
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                // =========================
+                // API Error
+                // =========================
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.detail ||
+                        "Failed to update classification."
+                    );
+
+                }
+
+
+                // =========================
+                // Update Displayed Values
+                // =========================
+
+                document.getElementById(
+                    "ticketCategory"
+                ).textContent =
+                    data.category;
+
+
+                document.getElementById(
+                    "ticketPriority"
+                ).textContent =
+                    data.priority;
+
+
+                // =========================
+                // Update Dropdown Values
+                // =========================
+
+                categorySelect.value =
+                    data.category;
+
+
+                prioritySelect.value =
+                    data.priority;
+
+
+                // =========================
+                // Success Message
+                // =========================
+
+                classificationMessage.textContent =
+                    "Classification updated successfully.";
+
+                classificationMessage.style.color =
+                    "#059669";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Classification update error:",
+                    error
+                );
+
+
+                classificationMessage.textContent =
+                    error.message;
+
+
+                classificationMessage.style.color =
+                    "#dc2626";
+
+
+            } finally {
+
+                saveClassificationButton.disabled =
+                    false;
+
+
+                saveClassificationButton.textContent =
+                    "Save Classification";
+
+            }
+
+        }
+    );
+
 }
 
 
@@ -174,13 +485,19 @@ async function loadTicketDetails() {
 function displayStatusHistory(history) {
 
     const historyContainer =
-        document.getElementById("statusHistory");
+        document.getElementById(
+            "statusHistory"
+        );
 
 
-    historyContainer.innerHTML = "";
+    historyContainer.innerHTML =
+        "";
 
 
-    if (!history || history.length === 0) {
+    if (
+        !history ||
+        history.length === 0
+    ) {
 
         historyContainer.innerHTML = `
             <div class="empty-state">
@@ -189,6 +506,7 @@ function displayStatusHistory(history) {
         `;
 
         return;
+
     }
 
 
@@ -197,7 +515,9 @@ function displayStatusHistory(history) {
         const historyItem =
             document.createElement("div");
 
-        historyItem.className = "history-item";
+
+        historyItem.className =
+            "history-item";
 
 
         historyItem.innerHTML = `
@@ -208,7 +528,9 @@ function displayStatusHistory(history) {
                     ${item.previous_status || "Created"}
                 </strong>
 
-                <span>→</span>
+                <span>
+                    →
+                </span>
 
                 <strong>
                     ${item.new_status}
@@ -216,9 +538,11 @@ function displayStatusHistory(history) {
 
             </div>
 
+
             <p class="history-remark">
                 ${item.remark || "No remark provided."}
             </p>
+
 
             <div class="history-date">
                 ${formatDateTime(item.created_at)}
@@ -227,9 +551,12 @@ function displayStatusHistory(history) {
         `;
 
 
-        historyContainer.appendChild(historyItem);
+        historyContainer.appendChild(
+            historyItem
+        );
 
     });
+
 }
 
 
@@ -240,34 +567,279 @@ function displayStatusHistory(history) {
 function formatDate(dateString) {
 
     if (!dateString) {
+
         return "-";
+
     }
 
-    const date = new Date(dateString);
 
-    return date.toLocaleDateString("en-IN", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric"
-    });
+    const date =
+        new Date(dateString);
+
+
+    return date.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
 }
 
 
 function formatDateTime(dateString) {
 
     if (!dateString) {
+
         return "-";
+
     }
 
-    const date = new Date(dateString);
 
-    return date.toLocaleString("en-IN", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-    });
+    const date =
+        new Date(dateString);
+
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
+
+}
+
+
+// =========================
+// Update Ticket Status
+// =========================
+
+const statusSelect =
+    document.getElementById(
+        "statusSelect"
+    );
+
+
+const statusRemark =
+    document.getElementById(
+        "statusRemark"
+    );
+
+
+const updateStatusButton =
+    document.getElementById(
+        "updateStatusButton"
+    );
+
+
+if (updateStatusButton) {
+
+    updateStatusButton.addEventListener(
+        "click",
+        async function () {
+
+
+            const newStatus =
+                statusSelect.value;
+
+
+            const remark =
+                statusRemark.value.trim();
+
+
+            // =========================
+            // Validate Remark
+            // =========================
+
+            if (!remark) {
+
+                message.textContent =
+                    "Please enter a remark.";
+
+                message.style.color =
+                    "#dc2626";
+
+                return;
+
+            }
+
+
+            updateStatusButton.disabled =
+                true;
+
+
+            updateStatusButton.textContent =
+                "Updating...";
+
+
+            message.textContent =
+                "";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_BASE_URL}/api/tickets/${ticketId}/status`,
+                        {
+                            method: "PATCH",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json",
+
+                                "Authorization":
+                                    `Bearer ${token}`
+
+                            },
+
+                            body: JSON.stringify({
+
+                                status:
+                                    newStatus,
+
+                                remark:
+                                    remark
+
+                            })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                // =========================
+                // Authentication Error
+                // =========================
+
+                if (
+                    response.status === 401 ||
+                    response.status === 403
+                ) {
+
+                    localStorage.removeItem(
+                        "access_token"
+                    );
+
+                    localStorage.removeItem(
+                        "user"
+                    );
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                // =========================
+                // API Error
+                // =========================
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.detail ||
+                        "Failed to update ticket status."
+                    );
+
+                }
+
+
+                // =========================
+                // Update Status UI
+                // =========================
+
+                const statusElement =
+                    document.getElementById(
+                        "ticketStatus"
+                    );
+
+
+                statusElement.innerHTML = `
+                    <span class="ticket-status status-${data.status
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}">
+                        ${data.status}
+                    </span>
+                `;
+
+
+                // =========================
+                // Update Dropdown
+                // =========================
+
+                statusSelect.value =
+                    data.status;
+
+
+                // =========================
+                // Clear Remark
+                // =========================
+
+                statusRemark.value =
+                    "";
+
+
+                // =========================
+                // Refresh History
+                // =========================
+
+                displayStatusHistory(
+                    data.status_history
+                );
+
+
+                // =========================
+                // Success Message
+                // =========================
+
+                message.textContent =
+                    "Ticket status updated successfully.";
+
+                message.style.color =
+                    "#059669";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Status update error:",
+                    error
+                );
+
+
+                message.textContent =
+                    error.message;
+
+                message.style.color =
+                    "#dc2626";
+
+
+            } finally {
+
+                updateStatusButton.disabled =
+                    false;
+
+                updateStatusButton.textContent =
+                    "Update Status";
+
+            }
+
+        }
+    );
+
 }
 
 
@@ -275,179 +847,30 @@ function formatDateTime(dateString) {
 // Logout
 // =========================
 
-document.getElementById("logoutButton").addEventListener(
-    "click",
-    function () {
-
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("user");
-
-        window.location.href = "login.html";
-    }
-);
-// =========================
-// Update Ticket Status
-// =========================
-
-const statusSelect = document.getElementById("statusSelect");
-const statusRemark = document.getElementById("statusRemark");
-const updateStatusButton =
-    document.getElementById("updateStatusButton");
+const logoutButton =
+    document.getElementById(
+        "logoutButton"
+    );
 
 
-updateStatusButton.addEventListener(
-    "click",
-    async function () {
+if (logoutButton) {
 
-        const newStatus = statusSelect.value;
-        const remark = statusRemark.value.trim();
+    logoutButton.addEventListener(
+        "click",
+        function () {
 
+            localStorage.removeItem(
+                "access_token"
+            );
 
-        // =========================
-        // Validate Remark
-        // =========================
+            localStorage.removeItem(
+                "user"
+            );
 
-        if (!remark) {
+            window.location.href =
+                "login.html";
 
-            message.textContent =
-                "Please enter a remark.";
-
-            message.style.color = "#dc2626";
-
-            return;
         }
+    );
 
-
-        updateStatusButton.disabled = true;
-
-        updateStatusButton.textContent =
-            "Updating...";
-
-        message.textContent = "";
-
-
-        try {
-
-            const response = await fetch(
-                `${API_BASE_URL}/api/tickets/${ticketId}/status`,
-                {
-                    method: "PATCH",
-
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    },
-
-                    body: JSON.stringify({
-                        status: newStatus,
-                        remark: remark
-                    })
-                }
-            );
-
-
-            const data = await response.json();
-
-
-            // =========================
-            // Authentication Error
-            // =========================
-
-            if (
-                response.status === 401 ||
-                response.status === 403
-            ) {
-
-                localStorage.removeItem(
-                    "access_token"
-                );
-
-                localStorage.removeItem(
-                    "user"
-                );
-
-                window.location.href =
-                    "login.html";
-
-                return;
-            }
-
-
-            // =========================
-            // API Error
-            // =========================
-
-            if (!response.ok) {
-
-                throw new Error(
-                    data.detail ||
-                    "Failed to update ticket status."
-                );
-            }
-
-
-            // =========================
-            // Update UI
-            // =========================
-
-            const statusElement =
-                document.getElementById("ticketStatus");
-
-
-            statusElement.innerHTML = `
-                <span class="ticket-status status-${data.status
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")}">
-                    ${data.status}
-                </span>
-            `;
-
-
-            // Update status dropdown
-
-            statusSelect.value =
-                data.status;
-
-
-            // Clear remark
-
-            statusRemark.value = "";
-
-
-            // Refresh history
-
-            displayStatusHistory(
-                data.status_history
-            );
-
-
-            message.textContent =
-                "Ticket status updated successfully.";
-
-            message.style.color =
-                "#059669";
-
-
-        } catch (error) {
-
-            console.error(
-                "Status update error:",
-                error
-            );
-
-            message.textContent =
-                error.message;
-
-            message.style.color =
-                "#dc2626";
-
-        } finally {
-
-            updateStatusButton.disabled =
-                false;
-
-            updateStatusButton.textContent =
-                "Update Status";
-        }
-    }
-);
+}

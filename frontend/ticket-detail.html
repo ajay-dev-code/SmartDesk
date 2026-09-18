@@ -2,17 +2,28 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SmartDesk - Ticket Details</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="css/style.css">
+    <title>SmartDesk - Ticket Detail</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
 </head>
+
 
 <body>
 
-    <div class="app-layout">
+    <div class="admin-layout">
+
 
         <!-- =========================
              Sidebar
@@ -22,31 +33,52 @@
 
             <div class="sidebar-brand">
 
-                <div class="brand-icon">S</div>
+                <div class="brand-icon">
+                    S
+                </div>
 
                 <div>
-                    <h1>SmartDesk</h1>
-                    <span>Support Management</span>
+
+                    <h1>
+                        SmartDesk
+                    </h1>
+
+                    <p>
+                        Support Management
+                    </p>
+
                 </div>
 
             </div>
 
 
+            <!-- Navigation -->
+
             <nav class="sidebar-nav">
 
-                <a href="dashboard.html" class="nav-item">
+                <a
+                    href="dashboard.html"
+                    class="nav-item"
+                >
                     <span class="nav-dot"></span>
                     Dashboard
                 </a>
 
 
-                <a href="tickets.html" class="nav-item">
+                <a
+                    href="tickets.html"
+                    class="nav-item"
+                >
                     <span class="nav-dot"></span>
                     Tickets
                 </a>
 
 
-                <a href="#" class="nav-item active" id="ticketDetailNav">
+                <a
+                    href="#"
+                    class="nav-item active"
+                    id="ticketDetailNav"
+                >
                     <span class="nav-dot"></span>
                     Ticket Detail
                 </a>
@@ -54,23 +86,36 @@
             </nav>
 
 
+            <!-- Sidebar Bottom -->
+
             <div class="sidebar-bottom">
 
-                <div class="admin-info">
+                <div class="admin-user">
 
                     <div class="admin-avatar">
                         A
                     </div>
 
                     <div>
-                        <strong id="adminName">Admin</strong>
-                        <span>Administrator</span>
+
+                        <strong id="adminName">
+                            Admin
+                        </strong>
+
+                        <span>
+                            Administrator
+                        </span>
+
                     </div>
 
                 </div>
 
 
-                <button id="logoutButton" class="logout-button">
+                <button
+                    type="button"
+                    id="logoutButton"
+                    class="logout-button"
+                >
                     Logout
                 </button>
 
@@ -79,151 +124,198 @@
         </aside>
 
 
+
         <!-- =========================
              Main Content
         ========================== -->
 
-        <main class="main-content">
+        <main class="admin-main">
 
-            <div class="page-header">
+
+            <!-- Header -->
+
+            <header class="admin-header">
 
                 <div>
 
-                    <a href="tickets.html" class="back-link">
-                        ← Back to Tickets
-                    </a>
-
-                    <h2>Ticket Details</h2>
+                    <h1>
+                        Ticket Detail
+                    </h1>
 
                     <p>
-                        View ticket information and support details
+                        View and manage support ticket
                     </p>
 
                 </div>
 
-            </div>
+                <a
+                    href="tickets.html"
+                    class="back-link"
+                >
+                    ← Back to Tickets
+                </a>
+
+            </header>
+
+
+
+            <!-- Global Message -->
+
+            <div
+                id="ticketMessage"
+                class="ticket-message"
+            ></div>
+
 
 
             <!-- =========================
-                 Message
-            ========================== -->
-
-            <div id="ticketMessage" class="ticket-message"></div>
-
-
-            <!-- =========================
-                 Ticket Details
+                 Ticket Information
             ========================== -->
 
             <section class="detail-card">
 
-                <div class="detail-header">
+
+                <div class="detail-card-header">
 
                     <div>
 
-                        <span class="detail-label">
-                            Reference
-                        </span>
+                        <h2>
+                            Ticket Details
+                        </h2>
 
-                        <h3 id="ticketReference">
-                            Loading...
-                        </h3>
+                        <p>
+                            Customer support request information
+                        </p>
 
                     </div>
 
 
-                    <div id="ticketStatus">
+                    <div
+                        id="ticketReference"
+                        class="ticket-reference"
+                    >
                         -
                     </div>
 
                 </div>
 
 
-                <div class="detail-grid">
 
-                    <div class="detail-item">
+                <!-- Customer -->
 
-                        <span class="detail-label">
-                            Customer Name
-                        </span>
+                <div class="detail-row">
 
-                        <strong id="customerName">
-                            -
-                        </strong>
-
+                    <div class="detail-label">
+                        Customer name
                     </div>
 
-
-                    <div class="detail-item">
-
-                        <span class="detail-label">
-                            Customer Email
-                        </span>
-
-                        <strong id="customerEmail">
-                            -
-                        </strong>
-
-                    </div>
-
-
-                    <div class="detail-item">
-
-                        <span class="detail-label">
-                            Subject
-                        </span>
-
-                        <strong id="ticketSubject">
-                            -
-                        </strong>
-
-                    </div>
-
-
-                    <div class="detail-item">
-
-                        <span class="detail-label">
-                            Created Date
-                        </span>
-
-                        <strong id="createdDate">
-                            -
-                        </strong>
-
+                    <div
+                        id="customerName"
+                        class="detail-value"
+                    >
+                        -
                     </div>
 
                 </div>
 
+
+
+                <!-- Email -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+                        Email
+                    </div>
+
+                    <div
+                        id="customerEmail"
+                        class="detail-value"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+
+
+                <!-- Subject -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+                        Subject
+                    </div>
+
+                    <div
+                        id="ticketSubject"
+                        class="detail-value"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+
+
+                <!-- Description -->
 
                 <div class="detail-description">
 
-                    <span class="detail-label">
+                    <div class="detail-label">
                         Description
-                    </span>
+                    </div>
 
-                    <p id="ticketDescription">
+                    <div
+                        id="ticketDescription"
+                        class="description-value"
+                    >
                         -
-                    </p>
+                    </div>
 
                 </div>
+
+
+
+                <!-- Created -->
+
+                <div class="detail-row">
+
+                    <div class="detail-label">
+                        Created
+                    </div>
+
+                    <div
+                        id="createdDate"
+                        class="detail-value"
+                    >
+                        -
+                    </div>
+
+                </div>
+
 
             </section>
 
 
+
             <!-- =========================
-                 AI Classification
+                 AI Triage Result
             ========================== -->
 
-            <section class="detail-card">
+            <section class="detail-card ai-detail-card">
 
-                <div class="section-title">
+
+                <div class="detail-card-header">
 
                     <div>
 
-                        <h3>AI Classification</h3>
+                        <h2>
+                            AI Triage Result
+                        </h2>
 
                         <p>
-                            Classification and summary generated by AI
+                            AI-generated classification for this ticket
                         </p>
 
                     </div>
@@ -231,41 +323,78 @@
                 </div>
 
 
-                <div class="ai-grid">
 
-                    <div class="ai-item">
+                <!-- AI Classification -->
+
+                <div class="ai-detail-grid">
+
+
+                    <!-- Category -->
+
+                    <div class="ai-detail-item">
 
                         <span class="detail-label">
                             Category
                         </span>
 
-                        <strong id="ticketCategory">
+                        <strong
+                            id="ticketCategory"
+                            class="ai-category-value"
+                        >
                             -
                         </strong>
 
                     </div>
 
 
-                    <div class="ai-item">
+
+                    <!-- Priority -->
+
+                    <div class="ai-detail-item">
 
                         <span class="detail-label">
                             Priority
                         </span>
 
-                        <strong id="ticketPriority">
+                        <strong
+                            id="ticketPriority"
+                            class="ai-priority-value"
+                        >
                             -
                         </strong>
+
+                    </div>
+
+
+
+                    <!-- Status -->
+
+                    <div class="ai-detail-item">
+
+                        <span class="detail-label">
+                            Status
+                        </span>
+
+                        <div
+                            id="ticketStatus"
+                            class="ai-status-value"
+                        >
+                            -
+                        </div>
 
                     </div>
 
                 </div>
 
 
-                <div class="ai-summary">
 
-                    <span class="detail-label">
+                <!-- AI Summary -->
+
+                <div class="ai-summary-box">
+
+                    <div class="detail-label">
                         AI Summary
-                    </span>
+                    </div>
 
                     <p id="aiSummary">
                         -
@@ -273,19 +402,25 @@
 
                 </div>
 
+
             </section>
 
+
+
             <!-- =========================
-                Admin Classification Correction
+                 Correct Classification
             ========================== -->
 
-            <div class="classification-update">
+            <section class="detail-card classification-section">
 
-                <div class="classification-title">
+
+                <div class="detail-card-header">
 
                     <div>
 
-                        <h4>Correct Classification</h4>
+                        <h2>
+                            Correct Classification
+                        </h2>
 
                         <p>
                             Adjust the AI classification when necessary
@@ -296,7 +431,11 @@
                 </div>
 
 
-                <div class="classification-grid">
+
+                <div class="classification-fields">
+
+
+                    <!-- Category -->
 
                     <div class="form-group">
 
@@ -304,7 +443,9 @@
                             Category
                         </label>
 
-                        <select id="categorySelect">
+                        <select
+                            id="categorySelect"
+                        >
 
                             <option value="Technical">
                                 Technical
@@ -327,13 +468,18 @@
                     </div>
 
 
+
+                    <!-- Priority -->
+
                     <div class="form-group">
 
                         <label for="prioritySelect">
                             Priority
                         </label>
 
-                        <select id="prioritySelect">
+                        <select
+                            id="prioritySelect"
+                        >
 
                             <option value="Low">
                                 Low
@@ -354,33 +500,60 @@
                 </div>
 
 
-                <button type="button" id="updateClassificationButton" class="primary-button">
+
+                <!-- Save -->
+
+                <button
+                    type="button"
+                    id="saveClassificationButton"
+                    class="primary-button"
+                >
                     Save Classification
                 </button>
 
-            </div>
+
+
+                <!-- Classification Message -->
+
+                <p
+                    id="classificationMessage"
+                    class="classification-message"
+                ></p>
+
+
+            </section>
+
 
 
             <!-- =========================
-                 Admin Status Update
-            ========================= -->
+                 Update Status
+            ========================== -->
 
-            <section class="detail-card">
+            <section class="detail-card status-update-section">
 
-                <div class="section-title">
+
+                <div class="detail-card-header">
 
                     <div>
-                        <h3>Update Ticket Status</h3>
+
+                        <h2>
+                            Update Ticket Status
+                        </h2>
 
                         <p>
-                            Change the current ticket status and add an admin remark
+                            Change the ticket lifecycle status
                         </p>
+
                     </div>
 
                 </div>
 
 
-                <div class="status-update-form">
+
+                <div class="status-update-fields">
+
+
+                    <!-- Status -->
 
                     <div class="form-group">
 
@@ -388,7 +561,9 @@
                             Status
                         </label>
 
-                        <select id="statusSelect">
+                        <select
+                            id="statusSelect"
+                        >
 
                             <option value="Open">
                                 Open
@@ -411,25 +586,39 @@
                     </div>
 
 
+
+                    <!-- Remark -->
+
                     <div class="form-group">
 
                         <label for="statusRemark">
                             Remark
                         </label>
 
-                        <textarea id="statusRemark" rows="4"
-                            placeholder="Enter a remark about this status update"></textarea>
+                        <textarea
+                            id="statusRemark"
+                            rows="4"
+                            placeholder="Enter a remark for this status update..."
+                        ></textarea>
 
                     </div>
 
-
-                    <button type="button" id="updateStatusButton" class="primary-button">
-                        Update Status
-                    </button>
-
                 </div>
 
+
+
+                <button
+                    type="button"
+                    id="updateStatusButton"
+                    class="primary-button"
+                >
+                    Update Status
+                </button>
+
+
             </section>
+
+
 
             <!-- =========================
                  Status History
@@ -437,14 +626,17 @@
 
             <section class="detail-card">
 
-                <div class="section-title">
+
+                <div class="detail-card-header">
 
                     <div>
 
-                        <h3>Status History</h3>
+                        <h2>
+                            Status History
+                        </h2>
 
                         <p>
-                            Previous status changes and admin remarks
+                            Record of ticket status changes
                         </p>
 
                     </div>
@@ -452,20 +644,32 @@
                 </div>
 
 
-                <div id="statusHistory" class="history-list">
+
+                <div
+                    id="statusHistory"
+                    class="status-history"
+                >
 
                     <div class="empty-state">
-                        Loading history...
+                        Loading status history...
                     </div>
 
                 </div>
 
+
             </section>
+
+
 
         </main>
 
     </div>
 
+
+
+    <!-- =========================
+         JavaScript
+    ========================== -->
 
     <script src="js/ticket-detail.js"></script>
 

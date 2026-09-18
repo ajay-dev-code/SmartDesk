@@ -2,15 +2,30 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SmartDesk - Ticket Submitted</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="css/style.css">
+    <title>SmartDesk - Ticket Received</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
 </head>
 
+
 <body>
+
+
+    <!-- =========================
+         Public Header
+    ========================== -->
 
     <header class="public-header">
 
@@ -21,69 +36,367 @@
             </div>
 
             <div class="public-brand-name">
-                <strong>SmartDesk</strong>
-                <span>support portal</span>
+
+                <strong>
+                    SmartDesk
+                </strong>
+
+                <span>
+                    support portal
+                </span>
+
             </div>
 
         </div>
 
-        <a href="login.html" class="admin-login-button">
+
+        <a
+            href="login.html"
+            class="admin-login-button"
+        >
             Admin login
         </a>
 
     </header>
 
 
+
+    <!-- =========================
+         Confirmation
+    ========================== -->
+
     <main class="confirmation-page">
 
-        <div class="confirmation-card">
-
-            <div class="success-icon">
-                ✓
-            </div>
-
-            <h1>Ticket submitted successfully</h1>
-
-            <p class="confirmation-text">
-                Thank you for contacting SmartDesk.
-                Your support request has been received.
-            </p>
+        <section class="confirmation-card">
 
 
-            <div class="reference-box">
+            <!-- =========================
+                 Success
+            ========================== -->
 
-                <span>Your reference number</span>
+            <div class="confirmation-success">
 
-                <strong id="referenceNumber">
+                <div class="success-icon">
+                    ✓
+                </div>
 
-                </strong>
+                <h1>
+                    Ticket received
+                </h1>
 
                 <p>
-                    Keep this reference number for future follow-up.
+                    Keep this reference number for future communication.
                 </p>
 
             </div>
 
 
+
+            <!-- =========================
+                 Ticket Reference
+            ========================== -->
+
+            <div class="ticket-reference-section">
+
+                <div class="ticket-reference-row">
+
+                    <strong id="referenceNumber">
+                        -
+                    </strong>
+
+                    <button
+                        type="button"
+                        id="copyReferenceButton"
+                    >
+                        Copy
+                    </button>
+
+                </div>
+
+                <span
+                    id="copyMessage"
+                    class="copy-message"
+                ></span>
+
+            </div>
+
+
+
+            <!-- =========================
+                 AI Triage
+            ========================== -->
+
+            <section class="ai-result-section">
+
+
+                <div class="ai-result-header">
+
+                    <h2>
+                        AI triage result
+                    </h2>
+
+                    <span id="aiResponseTime">
+                        AI classification completed
+                    </span>
+
+                </div>
+
+
+
+                <!-- Classification -->
+
+                <div class="ai-result-list">
+
+
+                    <div class="ai-result-row">
+
+                        <span>
+                            Category
+                        </span>
+
+                        <strong id="confirmationCategory">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="ai-result-row">
+
+                        <span>
+                            Priority
+                        </span>
+
+                        <strong id="confirmationPriority">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="ai-result-row">
+
+                        <span>
+                            Status
+                        </span>
+
+                        <strong id="confirmationStatus">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- Summary -->
+
+                <div class="ai-summary-row">
+
+                    <span>
+                        Summary
+                    </span>
+
+                    <p id="confirmationSummary">
+                        -
+                    </p>
+
+                </div>
+
+
+
+                <!-- Review Note -->
+
+                <p class="ai-review-note">
+                    An agent reviews every AI suggestion and may correct it.
+                </p>
+
+
+            </section>
+
+
+
+            <!-- =========================
+                 Actions
+            ========================== -->
+
             <div class="confirmation-actions">
 
-                <a href="index.html" class="submit-ticket-button">
+                <a
+                    href="index.html"
+                    class="submit-ticket-button"
+                >
                     Raise another ticket
+                </a>
+
+
+                <a
+                    href="login.html"
+                    class="open-admin-button"
+                >
+                    Open admin panel
                 </a>
 
             </div>
 
-        </div>
+
+        </section>
 
     </main>
+
+
+
+    <!-- =========================
+         JavaScript
+    ========================== -->
+
     <script>
-        const params = new URLSearchParams(window.location.search);
 
-        const referenceNumber = params.get("reference");
+        // ========================================
+        // Read Saved Ticket
+        // ========================================
 
-        document.getElementById("referenceNumber").textContent =
-            referenceNumber || "Unavailable";
+        const savedTicket =
+            localStorage.getItem("confirmation_ticket");
+
+
+        if (savedTicket) {
+
+            try {
+
+                const ticket =
+                    JSON.parse(savedTicket);
+
+
+                // Ticket ID
+
+                document.getElementById(
+                    "referenceNumber"
+                ).textContent =
+                    ticket.reference_number || "-";
+
+
+                // Category
+
+                document.getElementById(
+                    "confirmationCategory"
+                ).textContent =
+                    ticket.category || "General";
+
+
+                // Priority
+
+                document.getElementById(
+                    "confirmationPriority"
+                ).textContent =
+                    ticket.priority || "Medium";
+
+
+                // Status
+
+                document.getElementById(
+                    "confirmationStatus"
+                ).textContent =
+                    ticket.status || "Open";
+
+
+                // AI Summary
+
+                document.getElementById(
+                    "confirmationSummary"
+                ).textContent =
+                    ticket.ai_summary ||
+                    "AI summary unavailable.";
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Unable to read confirmation data:",
+                    error
+                );
+
+            }
+
+        }
+
+
+
+        // ========================================
+        // Copy Ticket ID
+        // ========================================
+
+        const copyButton =
+            document.getElementById(
+                "copyReferenceButton"
+            );
+
+        const copyMessage =
+            document.getElementById(
+                "copyMessage"
+            );
+
+
+        copyButton.addEventListener(
+            "click",
+            async function () {
+
+                const reference =
+                    document.getElementById(
+                        "referenceNumber"
+                    ).textContent;
+
+
+                if (!reference || reference === "-") {
+                    return;
+                }
+
+
+                try {
+
+                    await navigator.clipboard.writeText(
+                        reference
+                    );
+
+                    copyButton.textContent =
+                        "Copied";
+
+                    copyMessage.textContent =
+                        "Ticket ID copied";
+
+
+                    setTimeout(function () {
+
+                        copyButton.textContent =
+                            "Copy";
+
+                        copyMessage.textContent =
+                            "";
+
+                    }, 1800);
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Copy failed:",
+                        error
+                    );
+
+                    copyMessage.textContent =
+                        "Unable to copy";
+
+                }
+
+            }
+        );
+
     </script>
+
 
 </body>
 

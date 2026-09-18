@@ -96,7 +96,6 @@ ticketForm.addEventListener("submit", async function (event) {
     // =========================
 
     submitButton.disabled = true;
-
     submitButton.textContent = "Submitting...";
 
 
@@ -151,21 +150,55 @@ ticketForm.addEventListener("submit", async function (event) {
 
 
         // =========================
+        // Save AI Triage Result
+        // =========================
+
+        const confirmationTicket = {
+            reference_number: data.reference_number,
+            category: data.category,
+            priority: data.priority,
+            status: data.status,
+            ai_summary: data.ai_summary
+        };
+
+        localStorage.setItem(
+            "confirmation_ticket",
+            JSON.stringify(confirmationTicket)
+        );
+
+        window.location.href = "confirmation.html";
+
+
+        // =========================
         // Success
         // =========================
 
         console.log("Created ticket:", data);
 
-        console.log("Reference number:", data.reference_number);
-        // Pass reference number to confirmation page
+        console.log(
+            "AI triage result:",
+            {
+                category: data.category,
+                priority: data.priority,
+                status: data.status,
+                summary: data.ai_summary
+            }
+        );
 
-        window.location.href =
-            `confirmation.html?reference=${encodeURIComponent(data.reference_number)}`;
+
+        // =========================
+        // Go To Confirmation
+        // =========================
+
+        window.location.href = "confirmation.html";
 
 
     } catch (error) {
 
-        console.error("Ticket submission error:", error);
+        console.error(
+            "Ticket submission error:",
+            error
+        );
 
         message.textContent =
             "Unable to connect to the server. Please try again.";
@@ -175,7 +208,6 @@ ticketForm.addEventListener("submit", async function (event) {
     } finally {
 
         submitButton.disabled = false;
-
         submitButton.textContent = "Submit ticket";
 
     }
