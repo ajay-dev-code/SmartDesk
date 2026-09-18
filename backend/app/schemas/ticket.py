@@ -19,6 +19,7 @@ class TicketResponse(BaseModel):
     category: str
     priority: str
     ai_summary: str | None = None
+    created_at: object  
 
     class Config:
         from_attributes = True
